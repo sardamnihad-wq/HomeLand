@@ -1,0 +1,791 @@
+
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomeLand | خانوو و زەوی</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #14243b;
+    --gold: #c99a42;
+    --light: #f4f6f9;
+    --text: #24354c;
+}
+
+body {
+    font-family: Tahoma, Arial, sans-serif;
+    background: var(--light);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input, select {
+    font-family: inherit;
+}
+
+/* ===== سەرەوەی وێبسایت ===== */
+
+header {
+    background: var(--navy);
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: var(--gold);
+}
+
+.logo-icon {
+    color: var(--gold);
+    font-size: 43px;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    font-size: 14px;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: var(--gold);
+}
+
+.header-btn {
+    background: transparent;
+    color: white;
+    border: 1px solid var(--gold);
+    padding: 11px 22px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ===== بەشی سەرەکی ===== */
+
+.hero {
+    min-height: 390px;
+    background:
+        linear-gradient(90deg, rgba(10,22,39,.60),
+        rgba(10,22,39,.45)),
+        url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=85");
+
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px 7%;
+    color: white;
+}
+
+.hero h1 {
+    font-size: clamp(30px, 4vw, 52px);
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 17px;
+    line-height: 2;
+    max-width: 650px;
+    margin-bottom: 30px;
+}
+
+/* ===== گەڕان ===== */
+
+.search-box {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1.5fr auto;
+    gap: 12px;
+    box-shadow: 0 8px 30px #0002;
+}
+
+.search-box input,
+.search-box select {
+    width: 100%;
+    min-width: 0;
+    padding: 14px 12px;
+    border: 1px solid #e0e4eb;
+    border-radius: 6px;
+    color: var(--text);
+    background: white;
+    outline: none;
+}
+
+.search-box input:focus,
+.search-box select:focus {
+    border-color: var(--gold);
+}
+
+.gold-btn {
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 14px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.gold-btn:hover {
+    background: #af8030;
+}
+
+/* ===== خانووەکان ===== */
+
+.properties {
+    padding: 55px 4.5%;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.section-heading h2 {
+    font-size: 27px;
+}
+
+.section-heading p {
+    color: #7b8797;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.section-heading a {
+    color: var(--navy);
+    font-size: 14px;
+}
+
+.gold-line {
+    width: 55px;
+    height: 4px;
+    background: var(--gold);
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.property-card {
+    background: white;
+    border-radius: 9px;
+    overflow: hidden;
+    border: 1px solid #e7eaf0;
+    box-shadow: 0 3px 12px #00000008;
+    transition: .3s;
+}
+
+.property-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px #00000012;
+}
+
+.property-image {
+    height: 190px;
+    position: relative;
+    overflow: hidden;
+}
+
+.property-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .4s;
+}
+
+.property-card:hover .property-image img {
+    transform: scale(1.05);
+}
+
+.tag {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    background: var(--navy);
+    color: white;
+    padding: 7px 13px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.heart {
+    position: absolute;
+    top: 10px;
+    left: 13px;
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+    text-shadow: 0 2px 5px #0008;
+    background: none;
+    border: none;
+}
+
+.property-info {
+    padding: 18px 16px;
+}
+
+.property-info h3 {
+    font-size: 19px;
+    margin-bottom: 12px;
+}
+
+.location {
+    color: #7b8797;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding-bottom: 17px;
+    font-size: 13px;
+    color: #58677a;
+}
+
+.price {
+    color: var(--gold);
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+.price small {
+    font-size: 12px;
+}
+
+.detail-btn {
+    display: block;
+    text-align: center;
+    background: var(--navy);
+    color: white;
+    padding: 13px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: .3s;
+}
+
+.detail-btn:hover {
+    background: var(--gold);
+}
+
+.no-results {
+    display: none;
+    padding: 30px;
+    text-align: center;
+    color: #777;
+}
+
+/* ===== خزمەتگوزارییەکان ===== */
+
+.services {
+    background: #edf1f6;
+    padding: 45px 7%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    text-align: center;
+}
+
+.service-icon {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.service h3 {
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+.service p {
+    font-size: 13px;
+    color: #7b8797;
+    line-height: 1.8;
+}
+
+/* ===== پێشکەشکردنی خانوو ===== */
+
+.contact-banner {
+    margin: 45px 7%;
+    padding: 35px;
+    border-radius: 12px;
+    background: var(--navy);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.contact-banner h2 {
+    margin-bottom: 12px;
+}
+
+.contact-banner p {
+    color: #cbd4e0;
+    line-height: 1.8;
+}
+
+/* ===== خوارەوە ===== */
+
+footer {
+    background: var(--navy);
+    color: white;
+    padding: 30px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+footer p {
+    font-size: 13px;
+    color: #cbd4e0;
+}
+
+/* ===== مۆبایل ===== */
+
+@media (max-width: 1000px) {
+    .property-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .search-box {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    nav {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 650px) {
+    header {
+        flex-wrap: wrap;
+        padding: 15px 5%;
+    }
+
+    .logo {
+        font-size: 23px;
+    }
+
+    nav {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+        overflow-x: auto;
+    }
+
+    nav a {
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .header-btn {
+        padding: 9px 13px;
+        font-size: 12px;
+    }
+
+    .hero {
+        padding: 40px 5%;
+        min-height: 430px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .search-box {
+        grid-template-columns: 1fr;
+    }
+
+    .properties {
+        padding: 35px 5%;
+    }
+
+    .property-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .property-image {
+        height: 230px;
+    }
+
+    .services {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 35px 5%;
+    }
+
+    .contact-banner {
+        margin: 30px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- سەرەوە -->
+<header>
+    <a href="#" class="logo">
+        <div class="logo-icon">⌂</div>
+        <div>Home<span>Land</span></div>
+    </a>
+
+    <nav>
+        <a href="#">سەرەتا</a>
+        <a href="#properties">خانووەکان</a>
+        <a href="#properties">کرێکان</a>
+        <a href="#services">خزمەتگوزاری</a>
+        <a href="#contact">پەیوەندی</a>
+    </nav>
+
+    <button class="header-btn"
+        onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+        پەیوەندیمان پێوە بکە
+    </button>
+</header>
+
+<!-- بەشی سەرەکی -->
+<section class="hero">
+    <h1>خانووی خەونەکانت بدۆزەوە</h1>
+
+    <p>
+        باشترین هەڵبژاردەی خانوو، شوقە و زەوی لە هەولێر
+        و شوێنەکانی دیکە. خانووی گونجاو بۆ تۆ لێرە دەست پێ دەکات.
+    </p>
+
+    <form class="search-box" id="searchForm">
+
+        <select id="type">
+            <option value="">جۆری موڵک</option>
+            <option value="house">خانوو</option>
+            <option value="apartment">شوقە</option>
+            <option value="land">زەوی</option>
+        </select>
+
+        <select id="purpose">
+            <option value="">مەبەست</option>
+            <option value="sale">فرۆشتن</option>
+            <option value="rent">کرێ</option>
+        </select>
+
+        <select id="area">
+            <option value="">شوێن هەڵبژێرە</option>
+            <option value="erbil">هەولێر</option>
+            <option value="ankawa">عەنکاوە</option>
+            <option value="dream">شەقامی ١٠٠ مەتر</option>
+        </select>
+
+        <input id="keyword" type="text"
+            placeholder="ناوی ناوچە یان خانوو بنووسە...">
+
+        <button class="gold-btn" type="submit">⌕ گەڕان</button>
+
+    </form>
+</section>
+
+<!-- خانووەکان -->
+<section class="properties" id="properties">
+
+    <div class="section-heading">
+        <div>
+            <h2>موڵکە نوێکان</h2>
+            <p>باشترین هەڵبژاردەی خانوو و شوقە</p>
+            <div class="gold-line"></div>
+        </div>
+
+        <a href="#properties">بینینی هەموو ←</a>
+    </div>
+
+    <div class="property-grid" id="propertyGrid">
+
+        <!-- خانوو 1 -->
+        <article class="property-card"
+            data-type="house" data-purpose="sale"
+            data-area="erbil" data-keyword="خانوو سەرەخۆ">
+
+            <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+                     alt="خانووی مۆدێرن">
+                <span class="tag">فرۆشتن</span>
+                <button class="heart" onclick="toggleHeart(this)">♡</button>
+            </div>
+
+            <div class="property-info">
+                <h3>خانووی سەرەخۆ</h3>
+                <p class="location">⌖ هەولێر - ناوچەی جوان</p>
+
+                <div class="details">
+                    <span>▣ 400 م²</span>
+                    <span>▤ 4 ژوور</span>
+                    <span>▱ 3 حەمام</span>
+                </div>
+
+                <div class="price">$180,000</div>
+
+                <a class="detail-btn" href="#contact">
+                    بینینی وردەکاری ←
+                </a>
+            </div>
+        </article>
+
+        <!-- شوقە 2 -->
+        <article class="property-card"
+            data-type="apartment" data-purpose="rent"
+            data-area="erbil" data-keyword="شوقە کرێ">
+
+            <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80"
+                     alt="شوقەی مۆدێرن">
+                <span class="tag">کرێ</span>
+                <button class="heart" onclick="toggleHeart(this)">♡</button>
+            </div>
+
+            <div class="property-info">
+                <h3>شوقەی مۆدێرن</h3>
+                <p class="location">⌖ هەولێر - ناوچەی ئارام</p>
+
+                <div class="details">
+                    <span>▣ 120 م²</span>
+                    <span>▤ 2 ژوور</span>
+                    <span>▱ 2 حەمام</span>
+                </div>
+
+                <div class="price">$500 <small>/ مانگانە</small></div>
+
+                <a class="detail-btn" href="#contact">
+                    بینینی وردەکاری ←
+                </a>
+            </div>
+        </article>
+
+        <!-- شوقە 3 -->
+        <article class="property-card"
+            data-type="apartment" data-purpose="sale"
+            data-area="ankawa" data-keyword="شوقە عەنکاوە">
+
+            <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80"
+                     alt="شوقەی نیشتەجێبوون">
+                <span class="tag">فرۆشتن</span>
+                <button class="heart" onclick="toggleHeart(this)">♡</button>
+            </div>
+
+            <div class="property-info">
+                <h3>شوقەی خانووبەرە</h3>
+                <p class="location">⌖ هەولێر - عەنکاوە</p>
+
+                <div class="details">
+                    <span>▣ 100 م²</span>
+                    <span>▤ 2 ژوور</span>
+                    <span>▱ 1 حەمام</span>
+                </div>
+
+                <div class="price">$75,000</div>
+
+                <a class="detail-btn" href="#contact">
+                    بینینی وردەکاری ←
+                </a>
+            </div>
+        </article>
+
+        <!-- زەوی 4 -->
+        <article class="property-card"
+            data-type="land" data-purpose="sale"
+            data-area="dream" data-keyword="زەوی 100 مەتر">
+
+            <div class="property-image">
+                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80"
+                     alt="زەوی بۆ دروستکردنی خانوو">
+                <span class="tag">فرۆشتن</span>
+                <button class="heart" onclick="toggleHeart(this)">♡</button>
+            </div>
+
+            <div class="property-info">
+                <h3>زەوی بۆ خانووسازی</h3>
+                <p class="location">⌖ هەولێر - شەقامی ١٠٠ مەتر</p>
+
+                <div class="details">
+                    <span>▣ 600 م²</span>
+                    <span>زەوی نیشتەجێبوون</span>
+                </div>
+
+                <div class="price">$120,000</div>
+
+                <a class="detail-btn" href="#contact">
+                    بینینی وردەکاری ←
+                </a>
+            </div>
+        </article>
+
+    </div>
+
+    <div class="no-results" id="noResults">
+        هیچ موڵکێک بەو زانیارییانە نەدۆزرایەوە.
+    </div>
+
+</section>
+
+<!-- خزمەتگوزارییەکان -->
+<section class="services" id="services">
+
+    <div class="service">
+        <div class="service-icon">⌂</div>
+        <h3>هەڵبژاردەی زۆر</h3>
+        <p>هەزاران خانوو و شوقە بۆ تۆ</p>
+    </div>
+
+    <div class="service">
+        <div class="service-icon">♧</div>
+        <h3>پاراستنی مامەڵە</h3>
+        <p>یارمەتیدان لە کاتی مامەڵەکردن</p>
+    </div>
+
+    <div class="service">
+        <div class="service-icon">♢</div>
+        <h3>بەکارهێنانی ئاسان</h3>
+        <p>بە ئاسانی موڵکی دڵخوازت بدۆزەوە</p>
+    </div>
+
+    <div class="service">
+        <div class="service-icon">☏</div>
+        <h3>پشتیوانی</h3>
+        <p>پەیوەندیمان پێوە بکە بۆ ڕاوێژ</p>
+    </div>
+
+</section>
+
+<!-- پەیوەندی -->
+<section class="contact-banner" id="contact">
+    <div>
+        <h2>دەتەوێ خانووەکەت بفرۆشیت؟</h2>
+        <p>
+            موڵکەکەت لە وێبسایتەکەمان دابنێ و بگەیەنە
+            بە کڕیارانی زیاتر.
+        </p>
+    </div>
+
+    <a class="gold-btn" href="tel:+9647500000000">
+        پەیوەندیمان پێوە بکە
+    </a>
+</section>
+
+<!-- خوارەوە -->
+<footer>
+    <a href="#" class="logo">
+        <div class="logo-icon">⌂</div>
+        <div>Home<span>Land</span></div>
+    </a>
+
+    <p>© 2026 HomeLand - هەموو مافەکان پارێزراون</p>
+
+    <p>فەیسبووک | ئینستاگرام | تێلێگرام</p>
+</footer>
+
+<script>
+// گەڕان بەدوای موڵکەکان
+document.getElementById("searchForm").addEventListener("submit",
+function(event) {
+    event.preventDefault();
+
+    const type = document.getElementById("type").value;
+    const purpose = document.getElementById("purpose").value;
+    const area = document.getElementById("area").value;
+    const keyword = document.getElementById("keyword")
+        .value.trim().toLowerCase();
+
+    const cards = document.querySelectorAll(".property-card");
+    let found = 0;
+
+    cards.forEach(function(card) {
+        const matchesType =
+            !type || card.dataset.type === type;
+
+        const matchesPurpose =
+            !purpose || card.dataset.purpose === purpose;
+
+        const matchesArea =
+            !area || card.dataset.area === area;
+
+        const matchesKeyword =
+            !keyword ||
+            card.dataset.keyword.toLowerCase().includes(keyword) ||
+            card.querySelector("h3").textContent
+                .toLowerCase().includes(keyword);
+
+        const show = matchesType && matchesPurpose &&
+                     matchesArea && matchesKeyword;
+
+        card.style.display = show ? "" : "none";
+
+        if (show) found++;
+    });
+
+    document.getElementById("noResults").style.display =
+        found ? "none" : "block";
+
+    document.getElementById("properties")
+        .scrollIntoView({behavior: "smooth"});
+});
+
+// دوگمەی دڵ
+function toggleHeart(button) {
+    if (button.textContent === "♡") {
+        button.textContent = "♥";
+        button.style.color = "#ff4d6d";
+    } else {
+        button.textContent = "♡";
+        button.style.color = "white";
+    }
+}
+</script>
+
+</body>
+</html>
