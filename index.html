@@ -1,791 +1,4742 @@
-
 <!DOCTYPE html>
 <html lang="ckb" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HomeLand | خانوو و زەوی</title>
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --navy: #14243b;
-    --gold: #c99a42;
-    --light: #f4f6f9;
-    --text: #24354c;
-}
-
-body {
-    font-family: Tahoma, Arial, sans-serif;
-    background: var(--light);
-    color: var(--text);
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-button, input, select {
-    font-family: inherit;
-}
-
-/* ===== سەرەوەی وێبسایت ===== */
-
-header {
-    background: var(--navy);
-    color: white;
-    padding: 18px 7%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 25px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 27px;
-    font-weight: bold;
-}
-
-.logo span {
-    color: var(--gold);
-}
-
-.logo-icon {
-    color: var(--gold);
-    font-size: 43px;
-}
-
-nav {
-    display: flex;
-    gap: 30px;
-}
-
-nav a {
-    font-size: 14px;
-    transition: .3s;
-}
-
-nav a:hover {
-    color: var(--gold);
-}
-
-.header-btn {
-    background: transparent;
-    color: white;
-    border: 1px solid var(--gold);
-    padding: 11px 22px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* ===== بەشی سەرەکی ===== */
-
-.hero {
-    min-height: 390px;
-    background:
-        linear-gradient(90deg, rgba(10,22,39,.60),
-        rgba(10,22,39,.45)),
-        url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=85");
-
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 50px 7%;
-    color: white;
-}
-
-.hero h1 {
-    font-size: clamp(30px, 4vw, 52px);
-    margin-bottom: 20px;
-}
-
-.hero p {
-    font-size: 17px;
-    line-height: 2;
-    max-width: 650px;
-    margin-bottom: 30px;
-}
-
-/* ===== گەڕان ===== */
-
-.search-box {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr 1fr 1.5fr auto;
-    gap: 12px;
-    box-shadow: 0 8px 30px #0002;
-}
-
-.search-box input,
-.search-box select {
-    width: 100%;
-    min-width: 0;
-    padding: 14px 12px;
-    border: 1px solid #e0e4eb;
-    border-radius: 6px;
-    color: var(--text);
-    background: white;
-    outline: none;
-}
-
-.search-box input:focus,
-.search-box select:focus {
-    border-color: var(--gold);
-}
-
-.gold-btn {
-    background: var(--gold);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 14px 25px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: .3s;
-}
-
-.gold-btn:hover {
-    background: #af8030;
-}
-
-/* ===== خانووەکان ===== */
-
-.properties {
-    padding: 55px 4.5%;
-}
-
-.section-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.section-heading h2 {
-    font-size: 27px;
-}
-
-.section-heading p {
-    color: #7b8797;
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-.section-heading a {
-    color: var(--navy);
-    font-size: 14px;
-}
-
-.gold-line {
-    width: 55px;
-    height: 4px;
-    background: var(--gold);
-    margin-top: 15px;
-    border-radius: 5px;
-}
-
-.property-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
-}
-
-.property-card {
-    background: white;
-    border-radius: 9px;
-    overflow: hidden;
-    border: 1px solid #e7eaf0;
-    box-shadow: 0 3px 12px #00000008;
-    transition: .3s;
-}
-
-.property-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 28px #00000012;
-}
-
-.property-image {
-    height: 190px;
-    position: relative;
-    overflow: hidden;
-}
-
-.property-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: .4s;
-}
-
-.property-card:hover .property-image img {
-    transform: scale(1.05);
-}
-
-.tag {
-    position: absolute;
-    top: 13px;
-    right: 13px;
-    background: var(--navy);
-    color: white;
-    padding: 7px 13px;
-    border-radius: 5px;
-    font-size: 12px;
-}
-
-.heart {
-    position: absolute;
-    top: 10px;
-    left: 13px;
-    color: white;
-    font-size: 26px;
-    cursor: pointer;
-    text-shadow: 0 2px 5px #0008;
-    background: none;
-    border: none;
-}
-
-.property-info {
-    padding: 18px 16px;
-}
-
-.property-info h3 {
-    font-size: 19px;
-    margin-bottom: 12px;
-}
-
-.location {
-    color: #7b8797;
-    font-size: 13px;
-    margin-bottom: 18px;
-}
-
-.details {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    padding-bottom: 17px;
-    font-size: 13px;
-    color: #58677a;
-}
-
-.price {
-    color: var(--gold);
-    font-size: 21px;
-    font-weight: bold;
-    margin-bottom: 18px;
-}
-
-.price small {
-    font-size: 12px;
-}
-
-.detail-btn {
-    display: block;
-    text-align: center;
-    background: var(--navy);
-    color: white;
-    padding: 13px;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: .3s;
-}
-
-.detail-btn:hover {
-    background: var(--gold);
-}
-
-.no-results {
-    display: none;
-    padding: 30px;
-    text-align: center;
-    color: #777;
-}
-
-/* ===== خزمەتگوزارییەکان ===== */
-
-.services {
-    background: #edf1f6;
-    padding: 45px 7%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    text-align: center;
-}
-
-.service-icon {
-    font-size: 38px;
-    margin-bottom: 15px;
-}
-
-.service h3 {
-    font-size: 17px;
-    margin-bottom: 12px;
-}
-
-.service p {
-    font-size: 13px;
-    color: #7b8797;
-    line-height: 1.8;
-}
-
-/* ===== پێشکەشکردنی خانوو ===== */
-
-.contact-banner {
-    margin: 45px 7%;
-    padding: 35px;
-    border-radius: 12px;
-    background: var(--navy);
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.contact-banner h2 {
-    margin-bottom: 12px;
-}
-
-.contact-banner p {
-    color: #cbd4e0;
-    line-height: 1.8;
-}
-
-/* ===== خوارەوە ===== */
-
-footer {
-    background: var(--navy);
-    color: white;
-    padding: 30px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-footer p {
-    font-size: 13px;
-    color: #cbd4e0;
-}
-
-/* ===== مۆبایل ===== */
-
-@media (max-width: 1000px) {
-    .property-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .search-box {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    nav {
-        gap: 15px;
-    }
-}
-
-@media (max-width: 650px) {
-    header {
-        flex-wrap: wrap;
-        padding: 15px 5%;
-    }
-
-    .logo {
-        font-size: 23px;
-    }
-
-    nav {
-        order: 3;
-        width: 100%;
-        justify-content: space-between;
-        gap: 8px;
-        overflow-x: auto;
-    }
-
-    nav a {
-        font-size: 12px;
-        white-space: nowrap;
-    }
-
-    .header-btn {
-        padding: 9px 13px;
-        font-size: 12px;
-    }
-
-    .hero {
-        padding: 40px 5%;
-        min-height: 430px;
-    }
-
-    .hero p {
-        font-size: 14px;
-    }
-
-    .search-box {
-        grid-template-columns: 1fr;
-    }
-
-    .properties {
-        padding: 35px 5%;
-    }
-
-    .property-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .property-image {
-        height: 230px;
-    }
-
-    .services {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 35px 5%;
-    }
-
-    .contact-banner {
-        margin: 30px 5%;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    footer {
-        flex-direction: column;
-        text-align: center;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeLand | پلاتفۆرمی کڕین، فرۆشتن و بەکرێدانی خانوو و زەوی</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #14243b;
+            --navy-dark: #0a1627;
+            --navy-light: #1e3557;
+            --gold: #c99a42;
+            --gold-hover: #b38431;
+            --gold-light: rgba(201, 154, 66, 0.15);
+            --light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text: #24354c;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+            --radius: 10px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        /* ===== تۆپ بار (Top Bar) ===== */
+        .top-bar {
+            background: var(--navy-dark);
+            color: #cbd4e0;
+            border-bottom: 1px solid rgba(201, 154, 66, 0.25);
+            padding: 9px 7%;
+            font-size: 13px;
+        }
+
+        .top-bar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar-welcome {
+            color: #94a3b8;
+            font-size: 12.5px;
+        }
+
+        .top-bar-welcome span {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .top-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-bar-btn {
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 5px;
+            transition: .25s;
+        }
+
+        .top-bar-btn:hover {
+            color: var(--gold);
+        }
+
+        .top-bar-btn.highlight {
+            background: var(--gold-light);
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .top-bar-btn.highlight:hover {
+            background: var(--gold);
+            color: white;
+        }
+
+        .badge-count {
+            background: var(--gold);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .top-sep {
+            color: #334155;
+            font-size: 11px;
+        }
+
+        /* ===== سەرەوەی سەرەکی (Header) ===== */
+        header {
+            background: var(--navy);
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 27px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        .logo-icon {
+            color: var(--gold);
+            font-size: 38px;
+            line-height: 1;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a {
+            font-size: 14.5px;
+            transition: .3s;
+            color: #e2e8f0;
+            padding: 6px 0;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--gold);
+        }
+
+        .header-btns {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gold-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 11px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(201, 154, 66, 0.3);
+        }
+
+        .gold-btn:hover {
+            background: var(--gold-hover);
+            transform: translateY(-1px);
+        }
+
+        .header-outline-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid var(--gold);
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: .3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-outline-btn:hover {
+            background: rgba(201, 154, 66, 0.15);
+            color: var(--gold);
+        }
+
+        /* ===== بەشی سەرەکی (Hero Section) ===== */
+        .hero {
+            min-height: 480px;
+            background:
+                linear-gradient(90deg, rgba(10, 22, 39, 0.85), rgba(10, 22, 39, 0.65)),
+                url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=85");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 7%;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(201, 154, 66, 0.25);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 4.5vw, 54px);
+            line-height: 1.25;
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 17px;
+            line-height: 1.9;
+            color: #cbd4e0;
+            max-width: 650px;
+            margin-bottom: 35px;
+        }
+
+        /* ===== گەڕان و فلتەری پێشکەوتوو (Search Box) ===== */
+        .search-container {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1.2fr 1.1fr 1.4fr auto auto;
+            gap: 12px;
+            box-shadow: var(--shadow-lg);
+            align-items: center;
+        }
+
+        .search-box input,
+        .search-box select {
+            width: 100%;
+            min-width: 0;
+            padding: 13px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            color: var(--text);
+            background: white;
+            outline: none;
+            font-size: 13.5px;
+            transition: .25s;
+        }
+
+        .search-box input:focus,
+        .search-box select:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px var(--gold-light);
+        }
+
+        .search-reset-btn {
+            background: #f1f5f9;
+            color: var(--text-muted);
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            padding: 13px 15px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: .25s;
+            white-space: nowrap;
+        }
+
+        .search-reset-btn:hover {
+            background: #e2e8f0;
+            color: var(--danger);
+        }
+
+        /* ===== ستاتیسی ئامارەکان (Quick Stats Bar) ===== */
+        .stats-bar {
+            background: white;
+            padding: 25px 7%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .stat-item h4 {
+            font-size: 30px;
+            color: var(--navy);
+            font-weight: 800;
+        }
+
+        .stat-item p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ===== بەشی خانووەکان (Properties Grid) ===== */
+        .properties {
+            padding: 60px 7%;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 28px;
+            color: var(--navy);
+            font-weight: 800;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-size: 14.5px;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 4px;
+            background: var(--gold);
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .filter-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .results-count {
+            font-size: 14px;
+            color: var(--navy);
+            font-weight: bold;
+            background: #e2e8f0;
+            padding: 7px 14px;
+            border-radius: 20px;
+        }
+
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13.5px;
+            background: white;
+            color: var(--navy);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: transform .3s, box-shadow .3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .property-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .property-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: #e2e8f0;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.06);
+        }
+
+        .property-badges {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .tag {
+            background: var(--navy);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .tag.rent {
+            background: #0284c7;
+        }
+
+        .tag.sale {
+            background: var(--navy);
+        }
+
+        .tag.type {
+            background: rgba(201, 154, 66, 0.95);
+        }
+
+        .heart-btn {
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.3);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .25s;
+        }
+
+        .heart-btn:hover {
+            transform: scale(1.15);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .heart-btn.liked {
+            color: #ef4444;
+            background: white;
+            text-shadow: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .property-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .property-info h3 {
+            font-size: 18px;
+            color: var(--navy);
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .location {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 0;
+            border-top: 1px dashed var(--border);
+            border-bottom: 1px dashed var(--border);
+            font-size: 13px;
+            color: #58677a;
+            margin-bottom: 16px;
+        }
+
+        .details span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            margin-bottom: 16px;
+        }
+
+        .price {
+            color: var(--gold);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .price small {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .card-btns {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+        }
+
+        .detail-btn {
+            display: block;
+            text-align: center;
+            background: var(--navy);
+            color: white;
+            padding: 11px;
+            border-radius: 6px;
+            font-size: 13.5px;
+            font-weight: bold;
+            transition: .3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .detail-btn:hover {
+            background: var(--gold);
+        }
+
+        .quick-call-btn {
+            background: #edf2f7;
+            color: var(--navy);
+            border: 1px solid var(--border);
+            padding: 11px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .quick-call-btn:hover {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .no-results {
+            display: none;
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            text-align: center;
+            background: white;
+            border-radius: var(--radius);
+            border: 1px dashed #cbd5e1;
+        }
+
+        .no-results h3 {
+            font-size: 20px;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .no-results p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* ===== حاسیبەی قیستی خانووبەرە (Mortgage Calculator) ===== */
+        .calculator-section {
+            background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+            color: white;
+            padding: 70px 7%;
+            position: relative;
+        }
+
+        .calc-wrapper {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            backdrop-filter: blur(8px);
+        }
+
+        .calc-header h2 {
+            font-size: 30px;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .calc-header p {
+            color: #cbd4e0;
+            font-size: 15px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .calc-form-group {
+            margin-bottom: 20px;
+        }
+
+        .calc-form-group label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+        }
+
+        .calc-form-group label span {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .calc-input {
+            width: 100%;
+            padding: 13px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: .25s;
+        }
+
+        .calc-input:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .range-slider {
+            width: 100%;
+            accent-color: var(--gold);
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .calc-result-box {
+            background: white;
+            color: var(--text);
+            border-radius: 14px;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .calc-result-box h3 {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .monthly-payment {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .monthly-payment small {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .calc-breakdown {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+        }
+
+        .calc-row strong {
+            color: var(--navy);
+        }
+
+        /* ===== خزمەتگوزارییەکان (Services) ===== */
+        .services-section {
+            padding: 60px 7%;
+            background: #f8fafc;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px 22px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: .3s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-md);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 18px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ===== ڕای کڕیاران (Testimonials) ===== */
+        .testimonials-section {
+            padding: 60px 7%;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .stars {
+            color: #f59e0b;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card p {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .client-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--navy-light);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .client-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--navy);
+        }
+
+        .client-role {
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        /* ===== پرسیارە باوەکان (FAQ Accordion) ===== */
+        .faq-section {
+            padding: 60px 7%;
+            background: #f8fafc;
+        }
+
+        .faq-accordion {
+            max-width: 850px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: .25s;
+        }
+
+        .faq-question {
+            padding: 18px 24px;
+            font-weight: bold;
+            font-size: 15.5px;
+            color: var(--navy);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            color: var(--gold);
+        }
+
+        .faq-icon {
+            font-size: 20px;
+            transition: transform .3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 24px 18px;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.8;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* ===== بانەری پێشکەشکردنی خانوو (Sell/Contact Banner) ===== */
+        .contact-banner {
+            margin: 60px 7%;
+            padding: 45px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-banner h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .contact-banner p {
+            color: #cbd4e0;
+            line-height: 1.8;
+            font-size: 15px;
+            max-width: 600px;
+        }
+
+        .banner-buttons {
+            display: flex;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        /* ===== پەیوەندی خێرا (Inquiry Form Section) ===== */
+        .inquiry-section {
+            padding: 60px 7%;
+        }
+
+        .inquiry-wrapper {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 40px;
+        }
+
+        .inquiry-info h3 {
+            font-size: 24px;
+            color: var(--navy);
+            margin-bottom: 15px;
+        }
+
+        .inquiry-info p {
+            color: var(--text-muted);
+            font-size: 14.5px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .contact-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .contact-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--gold-light);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .contact-detail-text h5 {
+            font-size: 14px;
+            color: var(--navy);
+        }
+
+        .contact-detail-text p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .inquiry-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .inquiry-form .full-col {
+            grid-column: 1 / -1;
+        }
+
+        .inquiry-form input,
+        .inquiry-form select,
+        .inquiry-form textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: .25s;
+        }
+
+        .inquiry-form textarea {
+            resize: vertical;
+            height: 110px;
+        }
+
+        .inquiry-form input:focus,
+        .inquiry-form select:focus,
+        .inquiry-form textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px var(--gold-light);
+        }
+
+        /* ===== خوارەوە (Footer) ===== */
+        footer {
+            background: var(--navy-dark);
+            color: white;
+            padding: 50px 7% 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 16px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .footer-col p {
+            color: #94a3b8;
+            font-size: 13.5px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd4e0;
+            font-size: 13.5px;
+            transition: .25s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+            padding-right: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            transition: .25s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-btn:hover {
+            background: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #94a3b8;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* ===== مۆداڵەکان (Modals) ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 20, 35, 0.75);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            animation: modalFadeIn .25s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-box {
+            position: relative;
+            background: white;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 35px 30px;
+            border-radius: 14px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+
+        .modal-box.large {
+            max-width: 800px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            left: 18px;
+            border: none;
+            background: #f1f5f9;
+            color: #64748b;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        /* ==========================================
+           Auth & Account System (Redesigned & Elevated)
+        =========================================== */
+        .auth-header-title {
+            color: var(--navy);
+            text-align: center;
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .auth-header-sub {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 13.5px;
+            margin-top: 4px;
+            margin-bottom: 6px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 6px;
+            margin: 18px 0;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .auth-tab-btn {
+            flex: 1;
+            padding: 11px 12px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all .25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .auth-tab-btn.active {
+            background: var(--navy);
+            color: white;
+            box-shadow: 0 4px 14px rgba(20, 36, 59, 0.25);
+        }
+
+        /* Role selector for registration */
+        .role-selector-label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 6px;
+            text-align: right;
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .role-card {
+            border: 2px solid var(--border);
+            border-radius: 9px;
+            padding: 9px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .2s ease;
+            background: #fafbfc;
+            user-select: none;
+        }
+
+        .role-card:hover {
+            border-color: var(--gold);
+            background: #fffdf9;
+        }
+
+        .role-card.active {
+            border-color: var(--gold);
+            background: var(--gold-light);
+            color: var(--navy);
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(201, 154, 66, 0.2);
+        }
+
+        .role-card .role-icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .role-card .role-title {
+            font-size: 12px;
+            display: block;
+            line-height: 1.3;
+        }
+
+        /* Auth Form Inputs */
+        .auth-field-group {
+            margin-bottom: 12px;
+            text-align: right;
+        }
+
+        .auth-field-label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .auth-input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-input-wrap input {
+            width: 100%;
+            padding: 12px 38px 12px 38px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: all .25s ease;
+            background: #ffffff;
+            color: var(--text);
+        }
+
+        .auth-input-wrap input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3.5px var(--gold-light);
+            background: #fff;
+        }
+
+        .auth-input-icon {
+            position: absolute;
+            right: 12px;
+            color: #94a3b8;
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        .auth-eye-btn {
+            position: absolute;
+            left: 10px;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color .2s;
+        }
+
+        .auth-eye-btn:hover {
+            color: var(--navy);
+        }
+
+        /* Password Strength Meter */
+        .pwd-strength-container {
+            margin-top: 5px;
+        }
+
+        .pwd-strength-bar {
+            height: 5px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .pwd-strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: all .3s ease;
+            background: #e2e8f0;
+        }
+
+        .pwd-strength-text {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 3px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Row options (Remember me / Forgot pwd) */
+        .auth-options-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin: 12px 0 16px;
+        }
+
+        .auth-options-row label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .auth-options-row input[type="checkbox"] {
+            accent-color: var(--gold);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+
+        .auth-link {
+            color: var(--gold);
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            padding: 0;
+            font-size: 12.5px;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        .auth-submit-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: var(--gold);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all .25s ease;
+            box-shadow: 0 4px 14px rgba(201, 154, 66, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .auth-submit-btn:hover {
+            background: var(--gold-hover);
+            transform: translateY(-1px);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0 12px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .demo-login-btn {
+            width: 100%;
+            background: #f8fafc;
+            border: 1.5px dashed var(--gold);
+            color: var(--navy);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .demo-login-btn:hover {
+            background: var(--gold-light);
+            border-color: var(--gold-hover);
+        }
+
+        /* ===== Dashboard (Logged In Profile) ===== */
+        .dash-header-card {
+            background: linear-gradient(135deg, var(--navy-dark), var(--navy-light));
+            border-radius: 12px;
+            padding: 22px 18px;
+            color: white;
+            text-align: center;
+            border: 1px solid rgba(201, 154, 66, 0.35);
+            box-shadow: 0 6px 20px rgba(10, 22, 39, 0.2);
+            margin-bottom: 18px;
+        }
+
+        .dash-avatar-wrap {
+            position: relative;
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 12px;
+        }
+
+        .dash-avatar {
+            width: 100%;
+            height: 100%;
+            background: var(--navy);
+            color: var(--gold);
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .dash-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .dash-role-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-top: 5px;
+        }
+
+        .dash-info-row {
+            font-size: 12.5px;
+            color: #cbd5e1;
+            margin-top: 6px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .dash-nav-tabs {
+            display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 8px;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        .dash-nav-tab {
+            flex: 1;
+            padding: 9px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+
+        .dash-nav-tab.active {
+            background: white;
+            color: var(--navy);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .dash-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .dash-stat-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 12px 8px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .dash-stat-box span {
+            display: block;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .dash-stat-box p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .dash-prop-list {
+            max-height: 220px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .dash-prop-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: .2s;
+        }
+
+        .dash-prop-card:hover {
+            border-color: var(--gold);
+        }
+
+        .dash-prop-img {
+            width: 65px;
+            height: 52px;
+            border-radius: 6px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .dash-prop-details {
+            flex-grow: 1;
+        }
+
+        .dash-prop-details h4 {
+            font-size: 13.5px;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+
+        .dash-prop-details p {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .dash-prop-del-btn {
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .dash-prop-del-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .logout-btn {
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: .25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* ===== Header Button Styles for Auth State ===== */
+        .header-auth-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-register-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13.5px;
+            transition: .25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(201, 154, 66, 0.4);
+        }
+
+        .header-register-btn:hover {
+            background: var(--gold-hover);
+            transform: translateY(-1px);
+        }
+
+        .header-login-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(201, 154, 66, 0.6);
+            padding: 9px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            transition: .25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-login-btn:hover {
+            background: rgba(201, 154, 66, 0.15);
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .header-user-chip {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--gold);
+            color: white;
+            padding: 6px 14px 6px 8px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            transition: .25s;
+        }
+
+        .header-user-chip:hover {
+            background: rgba(201, 154, 66, 0.2);
+        }
+
+        .header-user-avatar {
+            width: 28px;
+            height: 28px;
+            background: var(--gold);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        /* ===== 4-Photo Uploader Component ===== */
+        .photo-uploader-box {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            transition: all .25s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .photo-uploader-box:hover,
+        .photo-uploader-box.dragover {
+            border-color: var(--gold);
+            background: #fffdf9;
+        }
+
+        .photo-uploader-icon {
+            font-size: 38px;
+            color: var(--gold);
+            margin-bottom: 6px;
+            line-height: 1;
+        }
+
+        .photo-uploader-title {
+            font-size: 14.5px;
+            font-weight: bold;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .photo-uploader-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .photo-upload-action-btn {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: .2s;
+        }
+
+        .photo-upload-action-btn:hover {
+            background: var(--gold);
+        }
+
+        /* 4 Slots Grid */
+        .photo-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .photo-slot {
+            position: relative;
+            height: 105px;
+            border-radius: 9px;
+            border: 2px dashed #cbd5e1;
+            background: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s ease;
+            cursor: pointer;
+        }
+
+        .photo-slot.filled {
+            border-style: solid;
+            border-color: var(--border);
+        }
+
+        .photo-slot.primary-slot {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px var(--gold-light);
+        }
+
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-slot-badge {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: rgba(10, 22, 39, 0.85);
+            color: var(--gold);
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            backdrop-filter: blur(3px);
+            pointer-events: none;
+        }
+
+        .photo-slot.primary-slot .photo-slot-badge {
+            background: var(--gold);
+            color: white;
+        }
+
+        .photo-slot-del {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .2s;
+            z-index: 10;
+        }
+
+        .photo-slot-del:hover {
+            background: var(--danger);
+            transform: scale(1.15);
+        }
+
+        .photo-slot-num {
+            font-size: 22px;
+            color: #cbd5e1;
+            font-weight: 800;
+        }
+
+        .photo-slot-label {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        /* ===== Property Details Gallery ===== */
+        .gallery-viewer-box {
+            position: relative;
+            height: 320px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #0a1627;
+        }
+
+        .gallery-viewer-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity .25s ease;
+        }
+
+        .gallery-arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(10, 22, 39, 0.75);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .2s;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+        }
+
+        .gallery-arrow-btn:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .gallery-arrow-btn.prev-btn { right: 10px; }
+        .gallery-arrow-btn.next-btn { left: 10px; }
+
+        .gallery-counter-pill {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(10, 22, 39, 0.85);
+            color: white;
+            font-size: 11.5px;
+            font-weight: bold;
+            padding: 3px 9px;
+            border-radius: 15px;
+            border: 1px solid rgba(201, 154, 66, 0.4);
+            backdrop-filter: blur(4px);
+        }
+
+        .gallery-thumbnails-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .gallery-thumb-item {
+            height: 65px;
+            border-radius: 7px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: .2s;
+            background: #e2e8f0;
+        }
+
+        .gallery-thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-thumb-item.active {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px var(--gold-light);
+        }
+
+        .gallery-thumb-item:hover {
+            border-color: var(--gold);
+            opacity: 0.9;
+        }
+
+        .card-photo-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(10, 22, 39, 0.8);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 7px;
+            border-radius: 4px;
+            backdrop-filter: blur(3px);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Property Details Modal Layout */
+        .prop-modal-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 30px;
+        }
+
+        .prop-modal-img {
+            height: 320px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .prop-modal-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .prop-modal-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 18px 0;
+        }
+
+        .spec-item {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .spec-item small {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .spec-item strong {
+            font-size: 14px;
+            color: var(--navy);
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 15px 0;
+        }
+
+        .feature-pill {
+            background: #e2e8f0;
+            color: var(--navy);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .prop-modal-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .whatsapp-btn {
+            flex: 1;
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: .25s;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1ebc59;
+        }
+
+        .phone-call-btn {
+            flex: 1;
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: .25s;
+        }
+
+        .phone-call-btn:hover {
+            background: var(--gold);
+        }
+
+        /* Wishlist Modal Layout */
+        .wishlist-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            gap: 15px;
+        }
+
+        .wishlist-thumb {
+            width: 70px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .wishlist-info {
+            flex-grow: 1;
+        }
+
+        .wishlist-info h4 {
+            font-size: 14.5px;
+            color: var(--navy);
+        }
+
+        .wishlist-info p {
+            font-size: 12.5px;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .wishlist-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .wishlist-remove-btn {
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: .2s;
+        }
+
+        .wishlist-remove-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Add Property Form */
+        .add-prop-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 15px;
+        }
+
+        .add-prop-form .full-col {
+            grid-column: 1 / -1;
+        }
+
+        .add-prop-form label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .add-prop-form input,
+        .add-prop-form select,
+        .add-prop-form textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13.5px;
+            outline: none;
+        }
+
+        .add-prop-form input:focus,
+        .add-prop-form select:focus,
+        .add-prop-form textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .preset-images {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .preset-chip {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11.5px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .preset-chip:hover {
+            background: var(--gold);
+            color: white;
+            border-color: var(--gold);
+        }
+
+        /* ===== تۆست نۆتفیکەیشن (Toast Notification) ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--navy-dark);
+            color: white;
+            padding: 14px 22px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-right: 4px solid var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            animation: slideInRight .3s ease;
+            max-width: 350px;
+        }
+
+        .toast.success {
+            border-right-color: var(--success);
+        }
+
+        .toast.error {
+            border-right-color: var(--danger);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* ===== مۆبایل و تابلێت (Responsive) ===== */
+        @media (max-width: 1050px) {
+            .search-box {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .calc-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .inquiry-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar-welcome {
+                display: none;
+            }
+
+            .top-bar-inner {
+                justify-content: center;
+            }
+
+            header {
+                flex-wrap: wrap;
+                padding: 15px 5%;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: space-between;
+                gap: 8px;
+                overflow-x: auto;
+                padding-top: 10px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            nav a {
+                font-size: 13px;
+                white-space: nowrap;
+            }
+
+            .search-box {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 20px 5%;
+            }
+
+            .contact-banner {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+                padding: 30px 20px;
+            }
+
+            .banner-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .banner-buttons button,
+            .banner-buttons a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .prop-modal-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .prop-modal-img {
+                height: 220px;
+            }
+
+            .photo-slots-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header-btns {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .header-register-btn, .header-login-btn {
+                padding: 8px 12px;
+                font-size: 12.5px;
+            }
+
+            .add-prop-form {
+                grid-template-columns: 1fr;
+            }
+
+            .inquiry-form {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- سەرەوە -->
-<header>
-    <a href="#" class="logo">
-        <div class="logo-icon">⌂</div>
-        <div>Home<span>Land</span></div>
-    </a>
+    <!-- ===== بەشی سەرەوەی سەرەکی (Top Bar) ===== -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="top-bar-welcome">
+                بەخێربێیت بۆ <span>HomeLand</span> | پلاتفۆرمی باوەڕپێکراوی کڕین و فرۆشتنی خانوو لە کوردستان
+            </div>
+            <div class="top-bar-actions">
+                <button class="top-bar-btn"
+                    onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">
+                    🧮 حاسیبەی قیست
+                </button>
+                <span class="top-sep">|</span>
+                <button class="top-bar-btn" onclick="openWishlistModal()">
+                    ♡ دڵخوازەکان <span class="badge-count" id="wishlistCount">0</span>
+                </button>
+                <span class="top-sep">|</span>
+                <div id="authTopSlot" style="display: inline-flex; align-items: center; gap: 6px;">
+                    <button class="top-bar-btn highlight" onclick="openAuthModal('register')">
+                        ✨ دروستکردنی هەژمار
+                    </button>
+                    <span class="top-sep">|</span>
+                    <button class="top-bar-btn" onclick="openAuthModal('login')">
+                        🔑 چوونەژوورەوە
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <nav>
-        <a href="#">سەرەتا</a>
-        <a href="#properties">خانووەکان</a>
-        <a href="#properties">کرێکان</a>
-        <a href="#services">خزمەتگوزاری</a>
-        <a href="#contact">پەیوەندی</a>
-    </nav>
-
-    <button class="header-btn"
-        onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-        پەیوەندیمان پێوە بکە
-    </button>
-</header>
-
-<!-- بەشی سەرەکی -->
-<section class="hero">
-    <h1>خانووی خەونەکانت بدۆزەوە</h1>
-
-    <p>
-        باشترین هەڵبژاردەی خانوو، شوقە و زەوی لە هەولێر
-        و شوێنەکانی دیکە. خانووی گونجاو بۆ تۆ لێرە دەست پێ دەکات.
-    </p>
-
-    <form class="search-box" id="searchForm">
-
-        <select id="type">
-            <option value="">جۆری موڵک</option>
-            <option value="house">خانوو</option>
-            <option value="apartment">شوقە</option>
-            <option value="land">زەوی</option>
-        </select>
-
-        <select id="purpose">
-            <option value="">مەبەست</option>
-            <option value="sale">فرۆشتن</option>
-            <option value="rent">کرێ</option>
-        </select>
-
-        <select id="area">
-            <option value="">شوێن هەڵبژێرە</option>
-            <option value="erbil">هەولێر</option>
-            <option value="ankawa">عەنکاوە</option>
-            <option value="dream">شەقامی ١٠٠ مەتر</option>
-        </select>
-
-        <input id="keyword" type="text"
-            placeholder="ناوی ناوچە یان خانوو بنووسە...">
-
-        <button class="gold-btn" type="submit">⌕ گەڕان</button>
-
-    </form>
-</section>
-
-<!-- خانووەکان -->
-<section class="properties" id="properties">
-
-    <div class="section-heading">
-        <div>
-            <h2>موڵکە نوێکان</h2>
-            <p>باشترین هەڵبژاردەی خانوو و شوقە</p>
-            <div class="gold-line"></div>
+    <!-- ===== هێدەر و ڕێدۆزی (Header) ===== -->
+    <header>
+        <div class="logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <div class="logo-icon">⌂</div>
+            <div>Home<span>Land</span></div>
         </div>
 
-        <a href="#properties">بینینی هەموو ←</a>
+        <nav>
+            <a href="#" class="active">سەرەتا</a>
+            <a href="#properties">خانووەکان</a>
+            <a href="#services">خزمەتگوزاری</a>
+            <a href="#calculator">حاسیبەی قیست</a>
+            <a href="#testimonials">ڕای کڕیاران</a>
+            <a href="#faq">پرسیارە باوەکان</a>
+            <a href="#contact">پەیوەندی</a>
+        </nav>
+
+        <div class="header-btns" id="headerBtnsSlot">
+            <button class="gold-btn" onclick="openAddPropertyModal()">
+                + خانووەکەت دابنێ
+            </button>
+            <div id="headerAuthButtonsSlot" style="display: inline-flex; align-items: center; gap: 8px;">
+                <button class="header-register-btn" onclick="openAuthModal('register')">
+                    ✨ دروستکردنی ئەکاونت
+                </button>
+                <button class="header-login-btn" onclick="openAuthModal('login')">
+                    🔑 چوونەژوورەوە
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== بەشی سەرەکی (Hero Section) ===== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">✨ پلاتفۆرمی ژمارە یەک بۆ خانووبەرە لە کوردستان</div>
+            <h1>خانووی خەونەکانت لێرەوە دەست پێدەکات</h1>
+            <p>
+                گەورەترین تۆڕی کڕین، فرۆشتن و بەکرێدانی خانوو، شوقە، ڤێلا و زەوی لە شارەکانی هەولێر، سلێمانی، دهۆک و
+                سەرجەم ناوچەکانی کوردستان بە گەرەنتی و پاراستنی مامەڵە.
+            </p>
+        </div>
+
+        <!-- فلتەر و گەڕانی پێشکەوتوو -->
+        <div class="search-container">
+            <form class="search-box" id="searchForm">
+                <select id="filterType">
+                    <option value="">جۆری موڵک (هەمووی)</option>
+                    <option value="house">خانوو</option>
+                    <option value="apartment">شوقە</option>
+                    <option value="villa">ڤێلا</option>
+                    <option value="land">زەوی</option>
+                    <option value="commercial">دوکان و بینا</option>
+                </select>
+
+                <select id="filterPurpose">
+                    <option value="">مەبەست (هەمووی)</option>
+                    <option value="sale">بۆ فرۆشتن</option>
+                    <option value="rent">بۆ کرێ</option>
+                </select>
+
+                <select id="filterCity">
+                    <option value="">شوێن و شار (هەمووی)</option>
+                    <option value="erbil">هەولێر</option>
+                    <option value="sulaymaniyah">سلێمانی</option>
+                    <option value="duhok">دهۆک</option>
+                    <option value="ankawa">عەنکاوە</option>
+                    <option value="100m">شەقامی ١٠٠ مەتر</option>
+                </select>
+
+                <select id="filterPriceRange">
+                    <option value="">سنووری نرخ (هەمووی)</option>
+                    <option value="under100k">کەمتر لە $100,000</option>
+                    <option value="100k-200k">$100,000 بۆ $200,000</option>
+                    <option value="200k-300k">$200,000 بۆ $300,000</option>
+                    <option value="above300k">زیاتر لە $300,000</option>
+                </select>
+
+                <input type="text" id="filterKeyword" placeholder="گەڕان بەدوای ناو یان ناوچە...">
+
+                <button class="gold-btn" type="submit">⌕ گەڕان</button>
+                <button class="search-reset-btn" type="button" onclick="resetSearchFilters()">سڕینەوە</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== ئامارە خێراکان (Quick Stats Bar) ===== -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <h4 id="statTotalProps">150+</h4>
+            <p>موڵکی بەردەست</p>
+        </div>
+        <div class="stat-item">
+            <h4>1,200+</h4>
+            <p>کڕیاری ڕازی</p>
+        </div>
+        <div class="stat-item">
+            <h4>18</h4>
+            <p>ساڵ ئەزموون لە خانووبەرە</p>
+        </div>
+        <div class="stat-item">
+            <h4>100%</h4>
+            <p>متمانە و یاسایی</p>
+        </div>
     </div>
 
-    <div class="property-grid" id="propertyGrid">
-
-        <!-- خانوو 1 -->
-        <article class="property-card"
-            data-type="house" data-purpose="sale"
-            data-area="erbil" data-keyword="خانوو سەرەخۆ">
-
-            <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
-                     alt="خانووی مۆدێرن">
-                <span class="tag">فرۆشتن</span>
-                <button class="heart" onclick="toggleHeart(this)">♡</button>
+    <!-- ===== لیستی موڵکەکان (Properties Section) ===== -->
+    <section class="properties" id="properties">
+        <div class="section-header">
+            <div class="section-title">
+                <h2>موڵکە نوێ و نایابەکان</h2>
+                <p>باشترین هەڵبژاردەی خانوو، شوقە و ڤێلا لە باشترین گەڕەک و شوێنەکان</p>
+                <div class="gold-line"></div>
             </div>
 
-            <div class="property-info">
-                <h3>خانووی سەرەخۆ</h3>
-                <p class="location">⌖ هەولێر - ناوچەی جوان</p>
+            <div class="filter-actions">
+                <span class="results-count" id="resultsCount">پیشاندانی ٨ موڵک</span>
+                <select class="sort-select" id="sortProperties" onchange="sortAndRenderProperties()">
+                    <option value="default">ڕیزبەندی: سەرەکی</option>
+                    <option value="price-low">نرخ: کەمترین بۆ زۆرترین</option>
+                    <option value="price-high">نرخ: زۆرترین بۆ کەمترین</option>
+                    <option value="area-high">ڕووبەر: گەورەترین</option>
+                </select>
+            </div>
+        </div>
 
-                <div class="details">
-                    <span>▣ 400 م²</span>
-                    <span>▤ 4 ژوور</span>
-                    <span>▱ 3 حەمام</span>
+        <!-- گرید بۆ موڵکەکان -->
+        <div class="property-grid" id="propertyGrid">
+            <!-- موڵکەکان بە جاڤاسکریپت بە شێوەی دینامیکی لێرە دروست دەبن -->
+        </div>
+
+        <!-- کاتێک هیچ موڵکێک نەدۆزرایەوە -->
+        <div class="no-results" id="noResults">
+            <h3>هیچ موڵکێک بەم زانیارییانەوە نەدۆزرایەوە!</h3>
+            <p>تکایە فلتەرەکان کەم بکەرەوە یان وشەی گەڕانەکەت بگۆڕە.</p>
+            <button class="gold-btn" onclick="resetSearchFilters()">هەموو موڵکەکان پیشان بدەوە</button>
+        </div>
+    </section>
+
+    <!-- ===== حاسیبەی قیستی خانووبەرە (Mortgage Calculator) ===== -->
+    <section class="calculator-section" id="calculator">
+        <div class="calc-wrapper">
+            <div class="calc-inputs-side">
+                <div class="calc-header">
+                    <h2>🧮 حاسیبەی قیستی مانگانەی خانوو</h2>
+                    <p>
+                        بۆ ئەوەی بە وردی بزانیت قیستی مانگانەت چەند دەبێت لە کاتی کڕینی خانوو بە قیست، بڕی پارەکە و
+                        ماوەی دانەوە بنووسە.
+                    </p>
                 </div>
 
-                <div class="price">$180,000</div>
-
-                <a class="detail-btn" href="#contact">
-                    بینینی وردەکاری ←
-                </a>
-            </div>
-        </article>
-
-        <!-- شوقە 2 -->
-        <article class="property-card"
-            data-type="apartment" data-purpose="rent"
-            data-area="erbil" data-keyword="شوقە کرێ">
-
-            <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80"
-                     alt="شوقەی مۆدێرن">
-                <span class="tag">کرێ</span>
-                <button class="heart" onclick="toggleHeart(this)">♡</button>
-            </div>
-
-            <div class="property-info">
-                <h3>شوقەی مۆدێرن</h3>
-                <p class="location">⌖ هەولێر - ناوچەی ئارام</p>
-
-                <div class="details">
-                    <span>▣ 120 م²</span>
-                    <span>▤ 2 ژوور</span>
-                    <span>▱ 2 حەمام</span>
+                <div class="calc-form-group">
+                    <label>نرخی موڵک ($): <span id="calcPriceDisplay">$120,000</span></label>
+                    <input type="number" id="calcPriceInput" class="calc-input" value="120000" step="1000"
+                        oninput="calculateMortgage()">
                 </div>
 
-                <div class="price">$500 <small>/ مانگانە</small></div>
-
-                <a class="detail-btn" href="#contact">
-                    بینینی وردەکاری ←
-                </a>
-            </div>
-        </article>
-
-        <!-- شوقە 3 -->
-        <article class="property-card"
-            data-type="apartment" data-purpose="sale"
-            data-area="ankawa" data-keyword="شوقە عەنکاوە">
-
-            <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80"
-                     alt="شوقەی نیشتەجێبوون">
-                <span class="tag">فرۆشتن</span>
-                <button class="heart" onclick="toggleHeart(this)">♡</button>
-            </div>
-
-            <div class="property-info">
-                <h3>شوقەی خانووبەرە</h3>
-                <p class="location">⌖ هەولێر - عەنکاوە</p>
-
-                <div class="details">
-                    <span>▣ 100 م²</span>
-                    <span>▤ 2 ژوور</span>
-                    <span>▱ 1 حەمام</span>
+                <div class="calc-form-group">
+                    <label>پێشەکی پێویست (%): <span id="calcDownDisplay">20% ($24,000)</span></label>
+                    <input type="range" id="calcDownRange" class="range-slider" min="10" max="50" value="20" step="5"
+                        oninput="calculateMortgage()">
                 </div>
 
-                <div class="price">$75,000</div>
-
-                <a class="detail-btn" href="#contact">
-                    بینینی وردەکاری ←
-                </a>
-            </div>
-        </article>
-
-        <!-- زەوی 4 -->
-        <article class="property-card"
-            data-type="land" data-purpose="sale"
-            data-area="dream" data-keyword="زەوی 100 مەتر">
-
-            <div class="property-image">
-                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80"
-                     alt="زەوی بۆ دروستکردنی خانوو">
-                <span class="tag">فرۆشتن</span>
-                <button class="heart" onclick="toggleHeart(this)">♡</button>
-            </div>
-
-            <div class="property-info">
-                <h3>زەوی بۆ خانووسازی</h3>
-                <p class="location">⌖ هەولێر - شەقامی ١٠٠ مەتر</p>
-
-                <div class="details">
-                    <span>▣ 600 م²</span>
-                    <span>زەوی نیشتەجێبوون</span>
+                <div class="calc-form-group">
+                    <label>ماوەی دانەوە (ساڵ): <span id="calcYearsDisplay">10 ساڵ (120 مانگ)</span></label>
+                    <input type="range" id="calcYearsRange" class="range-slider" min="1" max="25" value="10" step="1"
+                        oninput="calculateMortgage()">
                 </div>
 
-                <div class="price">$120,000</div>
-
-                <a class="detail-btn" href="#contact">
-                    بینینی وردەکاری ←
-                </a>
+                <div class="calc-form-group">
+                    <label>ڕێژەی قازانج/سوودی ساڵانە (%): <span id="calcRateDisplay">4%</span></label>
+                    <input type="range" id="calcRateRange" class="range-slider" min="0" max="12" value="4" step="0.5"
+                        oninput="calculateMortgage()">
+                </div>
             </div>
-        </article>
 
+            <div class="calc-result-box">
+                <h3>قیستی مانگانەی خەمڵێنراو</h3>
+                <div class="monthly-payment">
+                    <span id="monthlyPaymentResult">$972</span>
+                    <small>/ مانگانە</small>
+                </div>
+
+                <div class="calc-breakdown">
+                    <div class="calc-row">
+                        <span>بڕی قەرز:</span>
+                        <strong id="loanAmountResult">$96,000</strong>
+                    </div>
+                    <div class="calc-row">
+                        <span>بڕی پێشەکی:</span>
+                        <strong id="downPaymentResult">$24,000</strong>
+                    </div>
+                    <div class="calc-row">
+                        <span>کۆی سوود/قازانج:</span>
+                        <strong id="totalInterestResult">$20,640</strong>
+                    </div>
+                    <div class="calc-row">
+                        <span>کۆی گشتی دانەوە:</span>
+                        <strong id="totalPaymentResult">$116,640</strong>
+                    </div>
+                </div>
+
+                <button class="gold-btn" style="margin-top: 25px; width: 100%; justify-content: center;"
+                    onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+                    داواکردنی ڕاوێژی قیست
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== خزمەتگوزارییەکان (Services) ===== -->
+    <section class="services-section" id="services">
+        <div class="section-title" style="text-align: center;">
+            <h2>خزمەتگوزارییە پێشکەشکراوەکان</h2>
+            <p>ئێمە لە هەموو هەنگاوێکی کڕین، فرۆشتن و بەکرێدان لەگەڵتین</p>
+            <div class="gold-line" style="margin: 10px auto;"></div>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">⌂</div>
+                <h3>کڕین و فرۆشتن</h3>
+                <p>دۆزینەوەی گونجاوترین کڕیار یان موڵک لە کورتترین ماوەدا بە بەرزترین متمانە.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <h3>ڕاوێژکاری یاسایی</h3>
+                <p>پشکنینی بەڵگەنامە و تاپۆ و تاپۆکردنی موڵک لە دادگا و فەرمانگەکانی تۆمارکردن.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>نرخاندنی سەردەمی</h3>
+                <p>خەمڵاندنی دروستی نرخی بازاڕی بۆ خانوو و زەوییەکەت لەلایەن پسپۆڕانەوە.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔑</div>
+                <h3>بەڕێوەبردنی کرێ</h3>
+                <p>سەرپەرشتیکردنی شوقە و خانوو و کۆکردنەوەی کرێ بە گرێبەستی یاسایی پارێزراو.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ڕای کڕیاران (Testimonials) ===== -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="section-title" style="text-align: center;">
+            <h2>ڕای کڕیارە متمانەپێکراوەکانمان</h2>
+            <p>ئەوانەی لە ڕێگەی HomeLand خانووی خەونەکانیان دۆزییەوە</p>
+            <div class="gold-line" style="margin: 10px auto;"></div>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>
+                    «لە ڕێگەی ماڵپەڕەکەتانەوە توانیم لە ماوەی یەک هەفتەدا شوقەیەکی نایاب لە هەولێر بدۆزمەوە. شێوازی
+                    مامەڵە و وردەکارییەکان زۆر ڕوون و خێرا بوون.»
+                </p>
+                <div class="client-info">
+                    <div class="client-avatar">ک</div>
+                    <div>
+                        <div class="client-name">کاروان عەزیز</div>
+                        <div class="client-role">کڕیاری شوقە لە هەولێر</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>
+                    «خانووەکەم بە کەمتر لە ١٠ ڕۆژ فرۆشرا بێ ئەوەی کاتی زۆرم لێ بڕوات. تیمێکی زۆر دڵسۆز و پسپۆڕن، سوپاس
+                    بۆ خزمەتگوزارییە جوانەکەتان.»
+                </p>
+                <div class="client-info">
+                    <div class="client-avatar">ش</div>
+                    <div>
+                        <div class="client-name">شەهێن محەمەد</div>
+                        <div class="client-role">فرۆشیاری ڤێلا لە سلێمانی</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>
+                    «سیستەمی حاسیبەی قیست زۆر هاوکارم بوو تا بڕیاری کڕینی خانووەکەم بدەم. هەموو گرێبەستەکانمان بە یاسایی
+                    ئەنجام درا و تەواو پارێزراو بووین.»
+                </p>
+                <div class="client-info">
+                    <div class="client-avatar">ئ</div>
+                    <div>
+                        <div class="client-name">ئاراس تەها</div>
+                        <div class="client-role">کڕیاری خانوو لە دهۆک</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== پرسیارە باوەکان (FAQ Accordion) ===== -->
+    <section class="faq-section" id="faq">
+        <div class="section-title" style="text-align: center;">
+            <h2>پرسیارە باوەکان (FAQ)</h2>
+            <p>وەڵامی گرنگترین پرسیارەکان دەربارەی مامەڵەکردن لە HomeLand</p>
+            <div class="gold-line" style="margin: 10px auto;"></div>
+        </div>
+
+        <div class="faq-accordion">
+            <div class="faq-item active">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    چۆن دەتوانم خانووەکەم بۆ فرۆشتن یان کرێ دابنێم؟
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    زۆر بە ئاسانی! دەتوانیت کلیک لەسەر دوگمەی «خانووەکەت دابنێ» بکەیت لە سەرەوەی وێبسایتەکە و زانیاری و
+                    وێنەی خانووەکەت بنووسیت. دەستبەجێ لە ماڵپەڕەکە دادەنرێت و کڕیاران دەتوانن پەیوەندیت پێوە بکەن.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    ئایا موڵکەکان بە دڵنیایی تاپۆ و یاسایین؟
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    بەڵێ، سەرجەم ئەو موڵکانەی لەلایەن HomeLand پشکنینیان بۆ دەکرێت سەنەد و تاپۆی یاساییان لە
+                    فەرمانگەکانی تۆمارکردنی خانووبەرە پشتڕاست دەکرێتەوە تا هیچ کێشەیەکی موڵکداری دروست نەبێت.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    ئایا سیستەمی قیست بەردەستە؟
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    بەڵێ، بەشێک لە شوقە و ڤێلا نوێیەکان بە سیستەمی پێشەکی و قیستی درێژخایەنی ٣ تا ١٠ ساڵ بەردەستن.
+                    دەتوانیت لە فلتەرەکە مەبەستی کرێ یان فرۆشتن بە قیست دیاری بکەیت.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    چۆن پەیوەندی بە خاوەنی خانوو یان نوێنەرەوە بکەم؟
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    لە ژێر هەر موڵکێک دوگمەی «بینینی وردەکاری» هەیە. لە پەنجەرەی وردەکاری دوگمەی تەلەفۆن و دوگمەی
+                    ڕاستەوخۆی واتسئاپ دانراوە بە پەیامی ئامادەکراو.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== بانەری فرۆشتنی خانوو (Banner) ===== -->
+    <section class="contact-banner">
+        <div>
+            <h2>دەتەوێت موڵکەکەت بە زووترین کات بفرۆشیت؟</h2>
+            <p>
+                خانوو، شوقە یان زەوییەکەت لە HomeLand تۆمار بکە و بگەیە بە هەزاران کڕیاری ڕاستەقینە لە سەرانسەری
+                کوردستان.
+            </p>
+        </div>
+        <div class="banner-buttons">
+            <button class="gold-btn" onclick="openAddPropertyModal()">
+                + دابنانی موڵک بەخۆڕایی
+            </button>
+            <a class="header-outline-btn" href="tel:+9647500000000">
+                📞 پەیوەندی ڕاستەوخۆ
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== فۆڕمی پەیوەندی خێرا (Inquiry Form Section) ===== -->
+    <section class="inquiry-section" id="contact">
+        <div class="inquiry-wrapper">
+            <div class="inquiry-info">
+                <h3>پەیوەندیمان پێوە بکە</h3>
+                <p>
+                    ئەگەر هەر پرسیارێکت هەیە یان بەدوای موڵکێکی دیاریکراودا دەگەڕێیت، پەیامێکمان بۆ بنێرە و تیمەکەمان لە
+                    کەمترین ماوەدا پەیوەندیت پێوە دەکەنەوە.
+                </p>
+
+                <div class="contact-detail-item">
+                    <div class="contact-icon-box">📍</div>
+                    <div class="contact-detail-text">
+                        <h5>ناونیشانی ئۆفیسی سەرەکی</h5>
+                        <p>هەولێر - شەقامی گوڵان، تاوەری HomeLand</p>
+                    </div>
+                </div>
+
+                <div class="contact-detail-item">
+                    <div class="contact-icon-box">📞</div>
+                    <div class="contact-detail-text">
+                        <h5>ژمارەی مۆبایل و واتسئاپ</h5>
+                        <p>+964 750 123 4567 / +964 770 123 4567</p>
+                    </div>
+                </div>
+
+                <div class="contact-detail-item">
+                    <div class="contact-icon-box">✉️</div>
+                    <div class="contact-detail-text">
+                        <h5>ئیمەیڵی فەرمی</h5>
+                        <p>info@homeland-iq.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="inquiry-form" id="inquiryForm" onsubmit="handleInquirySubmit(event)">
+                <input type="text" id="inqName" placeholder="ناوی تەواو *" required>
+                <input type="tel" id="inqPhone" placeholder="ژمارەی مۆبایل *" required>
+
+                <select id="inqType" class="full-col">
+                    <option value="buy">دەمەوێت خانوو بکڕم</option>
+                    <option value="rent">دەمەوێت بە کرێ بگرم</option>
+                    <option value="sell">دەمەوێت خانووەکەم بفرۆشم</option>
+                    <option value="consult">داواکردنی ڕاوێژی یاسایی یان ئەندازیاری</option>
+                </select>
+
+                <textarea id="inqMessage" class="full-col"
+                    placeholder="پەیامەکەت بنووسە (ناوچەی مەبەست، بودجە، ژمارەی ژوور...)" required></textarea>
+
+                <button type="submit" class="gold-btn full-col" style="justify-content: center; padding: 14px;">
+                    ناردنی پەیام ✉️
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== پەڕاوێز (Footer) ===== -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 15px;">
+                    <div class="logo-icon">⌂</div>
+                    <div>Home<span>Land</span></div>
+                </div>
+                <p>
+                    HomeLand پلاتفۆرمی پێشەنگی کڕین، فرۆشتن و بەکرێدانی خانوو، شوقە و زەوییە لە کوردستان. ئامانجمان
+                    ئاسانکاری و هێنانەدی خەونی هەموو خێزانێکە بۆ دەستکەوتنی خانووی گونجاو.
+                </p>
+                <div class="social-icons">
+                    <a href="#" class="social-btn" title="Facebook">f</a>
+                    <a href="#" class="social-btn" title="Instagram">in</a>
+                    <a href="#" class="social-btn" title="Telegram">tg</a>
+                    <a href="#" class="social-btn" title="WhatsApp">wa</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>بەستەرە خێراکان</h4>
+                <ul class="footer-links">
+                    <li><a href="#">سەرەتا</a></li>
+                    <li><a href="#properties">خانووەکان بۆ فرۆشتن</a></li>
+                    <li><a href="#properties">شوقەکان بۆ کرێ</a></li>
+                    <li><a href="#calculator">حاسیبەی قیستی مانگانە</a></li>
+                    <li><a href="#services">خزمەتگوزارییەکان</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>شارە سەرەکییەکان</h4>
+                <ul class="footer-links">
+                    <li><a href="#properties" onclick="filterByCityName('erbil')">خانووبەرە لە هەولێر</a></li>
+                    <li><a href="#properties" onclick="filterByCityName('sulaymaniyah')">خانووبەرە لە سلێمانی</a></li>
+                    <li><a href="#properties" onclick="filterByCityName('duhok')">خانووبەرە لە دهۆک</a></li>
+                    <li><a href="#properties" onclick="filterByCityName('ankawa')">شوقە لە عەنکاوە</a></li>
+                    <li><a href="#properties" onclick="filterByCityName('100m')">زەوی لە ١٠٠ مەتری</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>دەربارەی سیستەم</h4>
+                <p>سەرجەم مافەکانی نەرمەکاڵا و دیزاین پارێزراوە بۆ HomeLand.</p>
+                <p style="color: var(--gold); font-weight: bold;">کاتی کارکردن: شەممە - پێنجشەممە (٩:٠٠ بەیانی - ٨:٠٠
+                    ئێوارە)</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 HomeLand Real Estate Platform. هەموو مافەکان پارێزراون.</p>
+            <p>دروستکراوە بە نوێترین تەکنەلۆژیای وێب بۆ باشترین ئەزموونی بەکارهێنەر.</p>
+        </div>
+    </footer>
+
+    <!-- ===== ١. مۆدالی هەژمار (Auth & Account Modal) ===== -->
+    <div id="accountModal" class="modal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('accountModal')">×</button>
+
+            <!-- لە کاتی دەرچوون: فۆڕمەکانی تۆمارکردن و چوونەژوورەوە -->
+            <div id="authFormsContainer">
+                <div class="auth-header-title">
+                    <span>🏠</span> Home<span>Land</span>
+                </div>
+                <p class="auth-header-sub">
+                    بەخێربێیت بۆ پلاتفۆرمی سەرەکی کڕین و فرۆشتنی خانوو
+                </p>
+
+                <!-- تابی هەڵبژاردنی دروستکردن یان چوونەژوورەوە -->
+                <div class="auth-tabs">
+                    <button id="authTabRegister" class="auth-tab-btn active" onclick="switchAuthTab('register')">
+                        ✨ دروستکردنی هەژمار
+                    </button>
+                    <button id="authTabLogin" class="auth-tab-btn" onclick="switchAuthTab('login')">
+                        🔑 چوونەژوورەوە
+                    </button>
+                </div>
+
+                <!-- فۆڕمی تۆمارکردنی نوێ -->
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <!-- هەڵبژاردنی جۆری بەکارهێنەر -->
+                    <label class="role-selector-label">جۆری هەژمارەکەت دیاریبکە: *</label>
+                    <div class="role-selector">
+                        <div class="role-card active" id="roleBuyer" onclick="selectRole('buyer')">
+                            <span class="role-icon">👤</span>
+                            <span class="role-title">کڕیار / کرێچی</span>
+                        </div>
+                        <div class="role-card" id="roleOwner" onclick="selectRole('owner')">
+                            <span class="role-icon">🏢</span>
+                            <span class="role-title">خاوەن موڵک</span>
+                        </div>
+                        <div class="role-card" id="roleAgency" onclick="selectRole('agency')">
+                            <span class="role-icon">🏛</span>
+                            <span class="role-title">نووسینگە / برۆکەر</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="regRole" value="buyer">
+
+                    <!-- ناوی تەواو -->
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">ناوی تەواو *</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">👤</span>
+                            <input type="text" id="regName" placeholder="نموونە: ئاراس کامەران" required>
+                        </div>
+                    </div>
+
+                    <!-- ئیمەیڵ -->
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">ئیمەیڵ *</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">✉️</span>
+                            <input type="email" id="regEmail" placeholder="example@email.com" required>
+                        </div>
+                    </div>
+
+                    <!-- ژمارەی تەلەفۆن -->
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">ژمارەی مۆبایل (واتسئاپ) *</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">📱</span>
+                            <input type="tel" id="regPhone" placeholder="+964 750 000 0000" required>
+                        </div>
+                    </div>
+
+                    <!-- شار -->
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">شار یان ناوچە *</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">📍</span>
+                            <select id="regCity" style="width: 100%; padding: 12px 38px 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; outline: none; background: white;" required>
+                                <option value="erbil">هەولێر</option>
+                                <option value="sulaymaniyah">سلێمانی</option>
+                                <option value="duhok">دهۆک</option>
+                                <option value="ankawa">عەنکاوە</option>
+                                <option value="kirkuk">کەرکووک</option>
+                                <option value="other">ناوچەکانی تر</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- وشەی نهێنی -->
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">وشەی نهێنی (لانیکەم ٦ پیت) *</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">🔒</span>
+                            <input type="password" id="regPassword" placeholder="••••••••" minlength="6" required oninput="handlePwdStrengthCheck(this.value)">
+                            <button type="button" class="auth-eye-btn" onclick="togglePasswordVisibility('regPassword', this)" title="پیشاندان/شاردنەوە">👁️</button>
+                        </div>
+                        <!-- پێوەری هێزی وشەی نهێنی -->
+                        <div class="pwd-strength-container">
+                            <div class="pwd-strength-bar">
+                                <div class="pwd-strength-fill" id="pwdStrengthFill"></div>
+                            </div>
+                            <div class="pwd-strength-text">
+                                <span id="pwdStrengthLabel">هێزی وشەی نهێنی: دیاری نەکراوە</span>
+                                <span>لانیکەم ٦ پیت</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- دووبارەکردنەوەی وشەی نهێنی -->
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">دووبارەکردنەوەی وشەی نهێنی *</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">🔒</span>
+                            <input type="password" id="regConfirmPassword" placeholder="••••••••" minlength="6" required>
+                            <button type="button" class="auth-eye-btn" onclick="togglePasswordVisibility('regConfirmPassword', this)" title="پیشاندان/شاردنەوە">👁️</button>
+                        </div>
+                    </div>
+
+                    <!-- ڕێککەوتننامە -->
+                    <div class="auth-options-row">
+                        <label>
+                            <input type="checkbox" id="regAgreeTerms" required checked>
+                            <span>ڕازیم بە مەرج و ڕێساکانی بەکارهێنانی HomeLand</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">
+                        <span>✨</span> دروستکردنی هەژمار و دەستپێکردن
+                    </button>
+
+                    <div class="auth-divider">یان تاقیکردنەوە بە یەک کلیک</div>
+
+                    <button type="button" class="demo-login-btn" onclick="quickDemoLogin()">
+                        <span>⚡</span> چوونەژوورەوە بە هەژماری ئامادەکراو (Demo User)
+                    </button>
+                </form>
+
+                <!-- فۆڕمی چوونەژوورەوە -->
+                <form id="loginForm" style="display: none;" onsubmit="handleLogin(event)">
+                    <!-- ئیمەیڵ -->
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">ئیمەیڵ یان ژمارەی مۆبایل *</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">✉️</span>
+                            <input type="text" id="loginEmail" placeholder="ئیمەیڵەکەت بنووسە" required>
+                        </div>
+                    </div>
+
+                    <!-- وشەی نهێنی -->
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">وشەی نهێنی *</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">🔒</span>
+                            <input type="password" id="loginPassword" placeholder="••••••••" required>
+                            <button type="button" class="auth-eye-btn" onclick="togglePasswordVisibility('loginPassword', this)" title="پیشاندان/شاردنەوە">👁️</button>
+                        </div>
+                    </div>
+
+                    <!-- هەڵبژاردنەکانی چوونەژوورەوە -->
+                    <div class="auth-options-row">
+                        <label>
+                            <input type="checkbox" id="loginRememberMe" checked>
+                            <span>لەبیرم مەکە</span>
+                        </label>
+                        <button type="button" class="auth-link" onclick="toggleForgotPwd(true)">
+                            وشەی نهێنیت لەبیرچووە؟
+                        </button>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">
+                        <span>🔑</span> چوونەژوورەوە بۆ هەژمار
+                    </button>
+
+                    <div class="auth-divider">یان تاقیکردنەوە بە یەک کلیک</div>
+
+                    <button type="button" class="demo-login-btn" onclick="quickDemoLogin()">
+                        <span>⚡</span> چوونەژوورەوە بە هەژماری ئامادەکراو (Demo User)
+                    </button>
+                </form>
+
+                <!-- فۆڕمی لەبیرچوونی وشەی نهێنی -->
+                <div id="forgotPwdBox" style="display: none; text-align: right;">
+                    <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 6px;">گۆڕین یان نوێکردنەوەی وشەی نهێنی</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+                        ئیمەیڵی تۆمارکراوت بنووسە بۆ دانانی وشەی نهێنی نوێ.
+                    </p>
+                    <div class="auth-field-group">
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">✉️</span>
+                            <input type="email" id="forgotEmail" placeholder="ئیمەیڵەکەت بنووسە" required>
+                        </div>
+                    </div>
+                    <div class="auth-field-group">
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">🔒</span>
+                            <input type="password" id="forgotNewPassword" placeholder="وشەی نهێنی نوێ (لانیکەم ٦ پیت)">
+                        </div>
+                    </div>
+                    <button type="button" class="gold-btn" style="width: 100%; justify-content: center; margin-bottom: 8px;" onclick="handleResetPassword()">
+                        نوێکردنەوەی وشەی نهێنی ✓
+                    </button>
+                    <button type="button" class="auth-link" style="display: block; width: 100%; text-align: center; margin-top: 6px;" onclick="toggleForgotPwd(false)">
+                        گەڕانەوە بۆ چوونەژوورەوە
+                    </button>
+                </div>
+            </div>
+
+            <!-- لە کاتی چوونەژوورەوەدا: داشبۆردی بەکارهێنەر (User Executive Dashboard) -->
+            <div id="userProfileContainer" style="display: none;">
+                <!-- کارتی سەرەکی پرۆفایل -->
+                <div class="dash-header-card">
+                    <div class="dash-avatar-wrap">
+                        <div class="dash-avatar" id="profAvatar">س</div>
+                    </div>
+                    <div class="dash-name" id="profName">سەردار عەلی</div>
+                    <div class="dash-role-badge" id="profRoleBadge">🏢 خاوەن موڵک</div>
+                    <div class="dash-info-row">
+                        <span id="profEmail">sardar@example.com</span>
+                        <span>•</span>
+                        <span id="profPhone">+964 750 000 0000</span>
+                    </div>
+                </div>
+
+                <!-- تابی داشبۆرد -->
+                <div class="dash-nav-tabs">
+                    <button class="dash-nav-tab active" onclick="switchDashTab('overview')">
+                        📊 پوختەی هەژمار
+                    </button>
+                    <button class="dash-nav-tab" onclick="switchDashTab('properties')">
+                        🏡 موڵکەکانم (<span id="profMyPropsCountBadge">0</span>)
+                    </button>
+                    <button class="dash-nav-tab" onclick="switchDashTab('edit')">
+                        ⚙️ دەستکاری پرۆفایل
+                    </button>
+                </div>
+
+                <!-- بەشی ١: پوختە -->
+                <div id="dashTabOverview">
+                    <div class="dash-stats-grid">
+                        <div class="dash-stat-box">
+                            <span id="profPropertiesCount">0</span>
+                            <p>موڵکی تۆمارکراو</p>
+                        </div>
+                        <div class="dash-stat-box">
+                            <span id="profWishlistCount">0</span>
+                            <p>دڵخوازەکان</p>
+                        </div>
+                        <div class="dash-stat-box">
+                            <span id="profViewsCount">142</span>
+                            <p>بینینی موڵک</p>
+                        </div>
+                    </div>
+
+                    <button class="gold-btn" style="width: 100%; justify-content: center; margin-bottom: 10px; padding: 13px;"
+                        onclick="closeModal('accountModal'); openAddPropertyModal();">
+                        + زیادکردنی موڵکی نوێ (بە ٤ وێنە) 📸
+                    </button>
+
+                    <button class="header-outline-btn" style="width: 100%; justify-content: center; margin-bottom: 12px; color: var(--navy); border-color: var(--border);"
+                        onclick="closeModal('accountModal'); openWishlistModal();">
+                        ♡ بینینی موڵکە دڵخوازەکانم
+                    </button>
+                </div>
+
+                <!-- بەشی ٢: موڵکە تۆمارکراوەکانی بەکارهێنەر -->
+                <div id="dashTabProperties" style="display: none;">
+                    <div class="dash-prop-list" id="dashUserPropsList">
+                        <!-- موڵکەکانی بەکارهێنەر لێرە دروست دەبن -->
+                    </div>
+                    <button class="gold-btn" style="width: 100%; justify-content: center; margin-bottom: 10px;"
+                        onclick="closeModal('accountModal'); openAddPropertyModal();">
+                        + زیادکردنی موڵکێکی تر
+                    </button>
+                </div>
+
+                <!-- بەشی ٣: دەستکاری زانیاری -->
+                <div id="dashTabEdit" style="display: none; text-align: right;">
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">ناو</label>
+                        <div class="auth-input-wrap">
+                            <input type="text" id="editProfName">
+                        </div>
+                    </div>
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">ژمارەی مۆبایل</label>
+                        <div class="auth-input-wrap">
+                            <input type="tel" id="editProfPhone">
+                        </div>
+                    </div>
+                    <div class="auth-field-group">
+                        <label class="auth-field-label">جۆری هەژمار</label>
+                        <div class="auth-input-wrap">
+                            <select id="editProfRole" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13.5px; background: white;">
+                                <option value="buyer">👤 کڕیار یان کرێچی</option>
+                                <option value="owner">🏢 خاوەن موڵک</option>
+                                <option value="agency">🏛 نووسینگەی خانووبەرە</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="gold-btn" style="width: 100%; justify-content: center; margin-bottom: 12px;" onclick="handleSaveProfileEdit()">
+                        پاشەکەوتکردنی گۆڕانکارییەکان ✓
+                    </button>
+                </div>
+
+                <!-- دوگمەی دەرچوون لە هەژمار -->
+                <button class="logout-btn" onclick="handleLogout()">
+                    <span>🚪</span> چوونەدەرەوە لە هەژمار
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="no-results" id="noResults">
-        هیچ موڵکێک بەو زانیارییانە نەدۆزرایەوە.
+    <!-- ===== ٢. مۆدالی دڵخوازەکان (Wishlist Modal) ===== -->
+    <div id="wishlistModal" class="modal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('wishlistModal')">×</button>
+            <h3 style="color: var(--navy); margin-bottom: 5px; font-size: 20px;">♡ موڵکە دڵخوازەکانت</h3>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">ئەو موڵکانەی نیشانەت کردوون بۆ
+                بینینی دواتر</p>
+
+            <div id="wishlistItemsList">
+                <!-- دڵخوازەکان لێرە دروست دەبن -->
+            </div>
+        </div>
     </div>
 
-</section>
+    <!-- ===== ٣. مۆدالی وردەکاری موڵک (Property Detail Modal) ===== -->
+    <div id="propertyDetailModal" class="modal">
+        <div class="modal-box large">
+            <button class="modal-close" onclick="closeModal('propertyDetailModal')">×</button>
 
-<!-- خزمەتگوزارییەکان -->
-<section class="services" id="services">
-
-    <div class="service">
-        <div class="service-icon">⌂</div>
-        <h3>هەڵبژاردەی زۆر</h3>
-        <p>هەزاران خانوو و شوقە بۆ تۆ</p>
+            <div class="prop-modal-layout" id="propertyDetailContent">
+                <!-- ناوەڕۆکی گەلەری و وردەکاری لێرە دادەنرێت -->
+            </div>
+        </div>
     </div>
 
-    <div class="service">
-        <div class="service-icon">♧</div>
-        <h3>پاراستنی مامەڵە</h3>
-        <p>یارمەتیدان لە کاتی مامەڵەکردن</p>
+    <!-- ===== ٤. مۆدالی زیادکردنی موڵکی نوێ (Add Property Modal - بە ٤ وێنە) ===== -->
+    <div id="addPropertyModal" class="modal">
+        <div class="modal-box large">
+            <button class="modal-close" onclick="closeModal('addPropertyModal')">×</button>
+            <h3 style="color: var(--navy); font-size: 22px; margin-bottom: 4px;">🏡 زیادکردنی موڵکی نوێ</h3>
+            <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 18px;">
+                زانیاری و تا ٤ وێنەی موڵکەکەت دابنێ تاوەکو بە شێوەیەکی پرۆفیشناڵ بڵاوبکرێتەوە.
+            </p>
+
+            <form class="add-prop-form" onsubmit="handleAddNewProperty(event)">
+                <div class="full-col">
+                    <label>ناونیشانی سەرەکی موڵک *</label>
+                    <input type="text" id="addPropTitle" placeholder="نموونە: خانووی دوو نهۆمی مۆدێرن لە وەزیران" required>
+                </div>
+
+                <div>
+                    <label>جۆری موڵک *</label>
+                    <select id="addPropType" required>
+                        <option value="house">خانوو</option>
+                        <option value="apartment">شوقە</option>
+                        <option value="villa">ڤێلا</option>
+                        <option value="land">زەوی</option>
+                        <option value="commercial">دوکان / بازرگانی</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>مەبەستی دانان *</label>
+                    <select id="addPropPurpose" required>
+                        <option value="sale">بۆ فرۆشتن</option>
+                        <option value="rent">بۆ کرێ</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>شار یان ناوچە *</label>
+                    <select id="addPropCity" required>
+                        <option value="erbil">هەولێر</option>
+                        <option value="sulaymaniyah">سلێمانی</option>
+                        <option value="duhok">دهۆک</option>
+                        <option value="ankawa">عەنکاوە</option>
+                        <option value="100m">شەقامی ١٠٠ مەتر</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>نرخ بە دۆلار ($) *</label>
+                    <input type="number" id="addPropPrice" placeholder="نموونە: 180000" required>
+                </div>
+
+                <div>
+                    <label>ڕووبەر بە مەتر دووجا (م²) *</label>
+                    <input type="number" id="addPropArea" placeholder="نموونە: 250" required>
+                </div>
+
+                <div>
+                    <label>ژمارەی ژوور</label>
+                    <input type="number" id="addPropRooms" placeholder="نموونە: 4" value="3">
+                </div>
+
+                <div>
+                    <label>ژمارەی حەمام</label>
+                    <input type="number" id="addPropBaths" placeholder="نموونە: 2" value="2">
+                </div>
+
+                <div>
+                    <label>ژمارەی تەلەفۆن بۆ پەیوەندی *</label>
+                    <input type="tel" id="addPropPhone" placeholder="+964 750 000 0000" required>
+                </div>
+
+                <!-- بەشی ٤ وێنە (بەبێ لینک - ڕاستەوخۆ لە مۆبایل و کۆمپیوتەر) -->
+                <div class="full-col">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <label style="margin-bottom: 0;">وێنەکانی خانوو (تا ٤ وێنە هەڵبژێرە) *</label>
+                        <span id="photoCountBadge" style="font-size: 12px; color: var(--gold); font-weight: bold;">(٠ لە ٤ وێنە دانراوە)</span>
+                    </div>
+
+                    <!-- فایل ئینپووتی شاراوە بۆ هەڵبژاردن -->
+                    <input type="file" id="propFileInput" accept="image/*" multiple style="display: none;" onchange="handlePropFilesSelect(event)">
+
+                    <!-- بۆکسی فڕێدان و کلیک بۆ هەڵبژاردن -->
+                    <div class="photo-uploader-box" id="photoDropzone" onclick="document.getElementById('propFileInput').click()">
+                        <div class="photo-uploader-icon">📷</div>
+                        <div class="photo-uploader-title">وێنەکان لە ئامێرەکەتەوە هەڵبژێرە (بەبێ لینک)</div>
+                        <div class="photo-uploader-sub">کلیک لێرە بکە بۆ هەڵبژاردنی تا ٤ وێنە لە مۆبایل یان کۆمپیوتەرەکەت (JPG, PNG, WEBP)</div>
+                        <button type="button" class="photo-upload-action-btn" onclick="event.stopPropagation(); document.getElementById('propFileInput').click()">
+                            📁 هەڵبژاردنی وێنەکان
+                        </button>
+                    </div>
+
+                    <!-- ٤ خانەی پێشبینین بۆ وێنەکان -->
+                    <div class="photo-slots-grid" id="photoSlotsGrid">
+                        <!-- Rendered by renderPhotoSlots() -->
+                    </div>
+
+                    <!-- هەڵبژاردنی ٤ وێنەی ئامادەکراو بۆ تاقیکردنەوە -->
+                    <div class="preset-images" style="margin-top: 14px; align-items: center; flex-wrap: wrap;">
+                        <span style="font-size: 11.5px; color: var(--text-muted);">یان هەڵبژاردنی ٤ وێنەی نموونەیی:</span>
+                        <span class="preset-chip" onclick="setPreset4Images('house')">🏠 ٤ وێنەی خانوو</span>
+                        <span class="preset-chip" onclick="setPreset4Images('apartment')">🏢 ٤ وێنەی شوقە</span>
+                        <span class="preset-chip" onclick="setPreset4Images('villa')">🏰 ٤ وێنەی ڤێلا</span>
+                        <span class="preset-chip" onclick="setPreset4Images('land')">🌿 ٤ وێنەی زەوی</span>
+                    </div>
+                </div>
+
+                <div class="full-col">
+                    <label>وەسف و تایبەتمەندی زیاتر</label>
+                    <textarea id="addPropDesc" rows="3" placeholder="تایبەتمەندی و وردەکارییەکانی خانوو بنووسە..."></textarea>
+                </div>
+
+                <div class="full-col" style="margin-top: 10px;">
+                    <button type="submit" class="gold-btn" style="width: 100%; justify-content: center; padding: 14px;">
+                        تۆمارکردن و بڵاوکردنەوەی موڵک ✓
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="service">
-        <div class="service-icon">♢</div>
-        <h3>بەکارهێنانی ئاسان</h3>
-        <p>بە ئاسانی موڵکی دڵخوازت بدۆزەوە</p>
-    </div>
+    <!-- ===== کۆنتەینەری تۆست نۆتفیکەیشن (Toast Notifications) ===== -->
+    <div class="toast-container" id="toastContainer"></div>
 
-    <div class="service">
-        <div class="service-icon">☏</div>
-        <h3>پشتیوانی</h3>
-        <p>پەیوەندیمان پێوە بکە بۆ ڕاوێژ</p>
-    </div>
+    <!-- ==========================================
+         سیستەمی جاڤاسکریپت (Core JavaScript Logic)
+    =========================================== -->
+    <script>
+        // داتای سەرەتایی موڵکەکان (Real Estate Dataset)
+        const initialProperties = [
+            {
+                id: "prop-1",
+                title: "خانووی مۆدێرنی سەرەخۆ لە وەزیران",
+                type: "house",
+                purpose: "sale",
+                city: "erbil",
+                locationName: "هەولێر - وەزیران",
+                price: 185000,
+                area: 400,
+                rooms: 4,
+                baths: 3,
+                phone: "+9647501112233",
+                image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80"
+                ],
+                description: "خانوویەکی مۆدێرن بە کوالێتی بەرز، دیکۆراتی تورکی، باخچەی فراوان، دوو نهۆم، گەراجی دوو ئۆتۆمبێل و نزیک لە هەموو خزمەتگوزارییەکان و بازاڕ.",
+                features: ["تاپۆی سەنەد", "باخچە", "گەراج", "سیستەمی کامێرا", "مۆلیدەی گەڕەک"]
+            },
+            {
+                id: "prop-2",
+                title: "شوقەی لوکس لە ئیمپایەر وۆڕڵد",
+                type: "apartment",
+                purpose: "rent",
+                city: "erbil",
+                locationName: "هەولێر - ئیمپایەر",
+                price: 850,
+                area: 145,
+                rooms: 2,
+                baths: 2,
+                phone: "+9647502223344",
+                image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
+                ],
+                description: "شوقەیەکی شاهانەی بینراو بە تەواوی کەلوپەل و ئەسایشی ٢٤ کاتژمێری. هۆڵی وەرزش، مەلەوانگە و خاوێنکردنەوەی بەردەوام.",
+                features: ["کەلوپەلی تەواو", "مەلەوانگە", "ئەسایشی ٢٤ کاتژمێر", "پارکینی ژێرزەمین", "ئەسانسۆر"]
+            },
+            {
+                id: "prop-3",
+                title: "ڤێلای شاهانە لە سەرچنار",
+                type: "villa",
+                purpose: "sale",
+                city: "sulaymaniyah",
+                locationName: "سلێمانی - سەرچنار",
+                price: 320000,
+                area: 600,
+                rooms: 5,
+                baths: 4,
+                phone: "+9647703334455",
+                image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+                ],
+                description: "ڤێلایەکی نایاب لە شوێنێکی بەرز و کەشوهەوایەکی پاک. خاوەنی مەلەوانگەی تایبەت، حەوشەی گەورە و دیزاینی ئەوروپی پێشکەوتووە.",
+                features: ["مەلەوانگەی تایبەت", "حەوشەی گەورە", "٥ ژووری ماستەر", "تاپۆی فەرمی", "شوێنی ئارام"]
+            },
+            {
+                id: "prop-4",
+                title: "زەوی نیشتەجێبوون لە شەقامی ١٠٠ مەتر",
+                type: "land",
+                purpose: "sale",
+                city: "100m",
+                locationName: "هەولێر - شەقامی ١٠٠ مەتر",
+                price: 120000,
+                area: 250,
+                rooms: 0,
+                baths: 0,
+                phone: "+9647504445566",
+                image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1524813686514-a57563d77d66?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80"
+                ],
+                description: "زەوییەکی نایاب بۆ دروستکردنی خانوو یان بینا لەسەر گۆشەی شەقام. نزیک لە قوتابخانە و نەخۆشخانە بە تاپۆی ڕەش و سپی تەواو.",
+                features: ["ڕووی لە ڕۆژهەڵات", "سەر شەقامی فراوان", "تاپۆی تەواو", "خزمەتگوزاری ئاو و کارەبا"]
+            },
+            {
+                id: "prop-5",
+                title: "شوقەی سەردەمیانە لە ماس سیتی",
+                type: "apartment",
+                purpose: "sale",
+                city: "duhok",
+                locationName: "دهۆک - ماس سیتی",
+                price: 95000,
+                area: 160,
+                rooms: 3,
+                baths: 2,
+                phone: "+9647505556677",
+                image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80"
+                ],
+                description: "شوقەیەکی سێ ژووری لە کۆمەڵگەی ماس سیتی دهۆک بە دیمەنی شاخ، خزمەتگوزاری سەربەخۆ، قوتابخانە و مۆڵی تایبەت.",
+                features: ["دیمەنی شاخ", "سیستەمی گەرمکەرەوە", "بالکۆنی گەورە", "قوتابخانە لە کۆمەڵگە"]
+            },
+            {
+                id: "prop-6",
+                title: "خانووی دوو نهۆمی دیزاین کراو لە عەنکاوە",
+                type: "house",
+                purpose: "sale",
+                city: "ankawa",
+                locationName: "هەولێر - عەنکاوە",
+                price: 210000,
+                area: 300,
+                rooms: 4,
+                baths: 3,
+                phone: "+9647506667788",
+                image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+                ],
+                description: "خانوویەکی تایبەت بە کەرەستەی ئەوروپی لە گەڕەکی ئارامی عەنکاوە، سەربانی چیمەنتۆی بەهێزکراو و متبەخی کراوەی ئەمریکی.",
+                features: ["متبەخی ئەمریکی", "گەراجی سەرپۆشراو", "تاپۆی تاپۆ", "گەڕەکی ئارام"]
+            },
+            {
+                id: "prop-7",
+                title: "دوکانی بازرگانی سەر شەقام لە بەختیاری",
+                type: "commercial",
+                purpose: "rent",
+                city: "sulaymaniyah",
+                locationName: "سلێمانی - بەختیاری",
+                price: 1200,
+                area: 85,
+                rooms: 1,
+                baths: 1,
+                phone: "+9647707778899",
+                image: "https://images.unsplash.com/photo-1582037928769-181f2644ecb7?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1582037928769-181f2644ecb7?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+                ],
+                description: "دوکانی بازرگانی گونجاو بۆ کافێ، نووسینگە، دەرمانخانە یان کۆمپانیا لەسەر ڕێگای سەرەکی و پڕ جوڵەی بەختیاری سلێمانی.",
+                features: ["ڕووبەری شوشەیی", "کارەبای بازرگانی", "سیستەمی زەنگ و ئاگر", "شوێنی پارک"]
+            },
+            {
+                id: "prop-8",
+                title: "ڤێلای لادێیی لە سەیرانگای دهۆک",
+                type: "villa",
+                purpose: "rent",
+                city: "duhok",
+                locationName: "دهۆک - زاویتا",
+                price: 1500,
+                area: 500,
+                rooms: 4,
+                baths: 3,
+                phone: "+9647508889900",
+                image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+                images: [
+                    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80"
+                ],
+                description: "ڤێلایەکی دڵگیر بۆ پشوو وەرگرتن بە باخچەی میوەی هەمەجۆر، ئاگردان، باڵکۆنی فراوان بە ڕووی سروشتی جوانی ناوچەی زاویتا.",
+                features: ["باخی میوە", "ئاگردانی دارین", "کەلوپەلی شاهانە", "دیمەنی سروشت"]
+            }
+        ];
 
-</section>
+        // دەرهێنانی موڵکەکان (Initial + LocalStorage Custom Properties)
+        function getAllProperties() {
+            const stored = localStorage.getItem("homeland_custom_properties");
+            const customProps = stored ? JSON.parse(stored) : [];
+            return [...customProps, ...initialProperties];
+        }
 
-<!-- پەیوەندی -->
-<section class="contact-banner" id="contact">
-    <div>
-        <h2>دەتەوێ خانووەکەت بفرۆشیت؟</h2>
-        <p>
-            موڵکەکەت لە وێبسایتەکەمان دابنێ و بگەیەنە
-            بە کڕیارانی زیاتر.
-        </p>
-    </div>
+        // دەرهێنانی لیستی دڵخوازەکان
+        function getWishlist() {
+            const stored = localStorage.getItem("homeland_wishlist");
+            return stored ? JSON.parse(stored) : [];
+        }
 
-    <a class="gold-btn" href="tel:+9647500000000">
-        پەیوەندیمان پێوە بکە
-    </a>
-</section>
+        function saveWishlist(list) {
+            localStorage.setItem("homeland_wishlist", JSON.stringify(list));
+            updateWishlistBadge();
+        }
 
-<!-- خوارەوە -->
-<footer>
-    <a href="#" class="logo">
-        <div class="logo-icon">⌂</div>
-        <div>Home<span>Land</span></div>
-    </a>
+        function updateWishlistBadge() {
+            const list = getWishlist();
+            const badge = document.getElementById("wishlistCount");
+            const profBadge = document.getElementById("profWishlistCount");
+            if (badge) badge.textContent = list.length;
+            if (profBadge) profBadge.textContent = list.length;
+        }
 
-    <p>© 2026 HomeLand - هەموو مافەکان پارێزراون</p>
+        // ==========================================
+        // پیشاندانی موڵکەکان لەناو پەڕەکە (Render)
+        // ==========================================
+        function renderProperties(propertiesToRender) {
+            const grid = document.getElementById("propertyGrid");
+            const noResults = document.getElementById("noResults");
+            const countLabel = document.getElementById("resultsCount");
+            const wishlist = getWishlist();
 
-    <p>فەیسبووک | ئینستاگرام | تێلێگرام</p>
-</footer>
+            grid.innerHTML = "";
 
-<script>
-// گەڕان بەدوای موڵکەکان
-document.getElementById("searchForm").addEventListener("submit",
-function(event) {
-    event.preventDefault();
+            if (!propertiesToRender || propertiesToRender.length === 0) {
+                noResults.style.display = "block";
+                countLabel.textContent = "هیچ موڵکێک نەدۆزرایەوە (٠)";
+                return;
+            }
 
-    const type = document.getElementById("type").value;
-    const purpose = document.getElementById("purpose").value;
-    const area = document.getElementById("area").value;
-    const keyword = document.getElementById("keyword")
-        .value.trim().toLowerCase();
+            noResults.style.display = "none";
+            countLabel.textContent = `پیشاندانی ${propertiesToRender.length} موڵک`;
 
-    const cards = document.querySelectorAll(".property-card");
-    let found = 0;
+            propertiesToRender.forEach(prop => {
+                const isLiked = wishlist.includes(prop.id);
+                const isRent = prop.purpose === "rent";
+                const priceFormatted = "$" + Number(prop.price).toLocaleString() + (isRent ? " <small>/ مانگانە</small>" : "");
 
-    cards.forEach(function(card) {
-        const matchesType =
-            !type || card.dataset.type === type;
+                const typeLabels = {
+                    house: "خانوو",
+                    apartment: "شوقە",
+                    villa: "ڤێلا",
+                    land: "زەوی",
+                    commercial: "بازرگانی"
+                };
 
-        const matchesPurpose =
-            !purpose || card.dataset.purpose === purpose;
+                const card = document.createElement("article");
+                card.className = "property-card";
+                const allImages = (prop.images && prop.images.length > 0) ? prop.images : (prop.image ? [prop.image] : []);
+                const photoBadgeHtml = allImages.length > 1 ? `<span class="card-photo-counter">📷 ${allImages.length} وێنە</span>` : '';
 
-        const matchesArea =
-            !area || card.dataset.area === area;
+                card.innerHTML = `
+                    <div class="property-image">
+                        <img src="${prop.image}" alt="${prop.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80'">
+                        <div class="property-badges">
+                            <span class="tag ${isRent ? 'rent' : 'sale'}">${isRent ? 'کرێ' : 'فرۆشتن'}</span>
+                            <span class="tag type">${typeLabels[prop.type] || 'خانووبەرە'}</span>
+                        </div>
+                        ${photoBadgeHtml}
+                        <button class="heart-btn ${isLiked ? 'liked' : ''}" onclick="toggleWishlist('${prop.id}', event)" title="زیادکردن بۆ دڵخوازەکان">
+                            ${isLiked ? '♥' : '♡'}
+                        </button>
+                    </div>
 
-        const matchesKeyword =
-            !keyword ||
-            card.dataset.keyword.toLowerCase().includes(keyword) ||
-            card.querySelector("h3").textContent
-                .toLowerCase().includes(keyword);
+                    <div class="property-info">
+                        <h3>${prop.title}</h3>
+                        <p class="location">📍 ${prop.locationName}</p>
 
-        const show = matchesType && matchesPurpose &&
-                     matchesArea && matchesKeyword;
+                        <div class="details">
+                            <span>▣ ${prop.area} م²</span>
+                            ${prop.rooms > 0 ? `<span>▤ ${prop.rooms} ژوور</span>` : `<span>▤ پارچە</span>`}
+                            ${prop.baths > 0 ? `<span>▱ ${prop.baths} حەمام</span>` : `<span>▱ تاپۆ</span>`}
+                        </div>
 
-        card.style.display = show ? "" : "none";
+                        <div class="price-row">
+                            <div class="price">${priceFormatted}</div>
+                        </div>
 
-        if (show) found++;
-    });
+                        <div class="card-btns">
+                            <button class="detail-btn" onclick="openPropertyDetail('${prop.id}')">
+                                بینینی وردەکاری ←
+                            </button>
+                            <a class="quick-call-btn" href="tel:${prop.phone}" title="پەیوەندی بە خاوەن موڵک">
+                                📞
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
 
-    document.getElementById("noResults").style.display =
-        found ? "none" : "block";
+        // ==========================================
+        // گەڕان و فلتەرکردن (Search & Filter)
+        // ==========================================
+        function filterProperties() {
+            const type = document.getElementById("filterType").value;
+            const purpose = document.getElementById("filterPurpose").value;
+            const city = document.getElementById("filterCity").value;
+            const priceRange = document.getElementById("filterPriceRange").value;
+            const keyword = document.getElementById("filterKeyword").value.trim().toLowerCase();
 
-    document.getElementById("properties")
-        .scrollIntoView({behavior: "smooth"});
-});
+            const allProps = getAllProperties();
 
-// دوگمەی دڵ
-function toggleHeart(button) {
-    if (button.textContent === "♡") {
-        button.textContent = "♥";
-        button.style.color = "#ff4d6d";
-    } else {
-        button.textContent = "♡";
-        button.style.color = "white";
-    }
-}
-</script>
+            const filtered = allProps.filter(prop => {
+                const matchType = !type || prop.type === type;
+                const matchPurpose = !purpose || prop.purpose === purpose;
+                const matchCity = !city || prop.city === city;
 
+                let matchPrice = true;
+                const price = Number(prop.price);
+                if (priceRange === "under100k") matchPrice = price < 100000;
+                else if (priceRange === "100k-200k") matchPrice = price >= 100000 && price <= 200000;
+                else if (priceRange === "200k-300k") matchPrice = price > 200000 && price <= 300000;
+                else if (priceRange === "above300k") matchPrice = price > 300000;
+
+                let matchKeyword = true;
+                if (keyword) {
+                    const fullText = (prop.title + " " + prop.locationName + " " + (prop.description || "")).toLowerCase();
+                    matchKeyword = fullText.includes(keyword);
+                }
+
+                return matchType && matchPurpose && matchCity && matchPrice && matchKeyword;
+            });
+
+            renderProperties(filtered);
+            document.getElementById("properties").scrollIntoView({ behavior: "smooth" });
+        }
+
+        document.getElementById("searchForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            filterProperties();
+        });
+
+        function resetSearchFilters() {
+            document.getElementById("searchForm").reset();
+            renderProperties(getAllProperties());
+            showToast("فلتەرەکان بە سەرکەوتوویی پاککرانەوە", "info");
+        }
+
+        function filterByCityName(cityName) {
+            document.getElementById("filterCity").value = cityName;
+            filterProperties();
+        }
+
+        function sortAndRenderProperties() {
+            const sortMode = document.getElementById("sortProperties").value;
+            let current = getAllProperties();
+
+            if (sortMode === "price-low") {
+                current.sort((a, b) => a.price - b.price);
+            } else if (sortMode === "price-high") {
+                current.sort((a, b) => b.price - a.price);
+            } else if (sortMode === "area-high") {
+                current.sort((a, b) => b.area - a.area);
+            }
+
+            renderProperties(current);
+        }
+
+        // ==========================================
+        // دڵخوازەکان (Wishlist Toggle & Modal)
+        // ==========================================
+        function toggleWishlist(propId, event) {
+            if (event) event.stopPropagation();
+            let list = getWishlist();
+            const index = list.indexOf(propId);
+
+            if (index > -1) {
+                list.splice(index, 1);
+                saveWishlist(list);
+                showToast("موڵک لە لیستی دڵخوازەکان دەرهێنرا", "info");
+            } else {
+                list.push(propId);
+                saveWishlist(list);
+                showToast("موڵک بە سەرکەوتوویی خرایە لیستی دڵخوازەکانت ♥", "success");
+            }
+
+            renderProperties(getAllProperties());
+            renderWishlistItems();
+        }
+
+        function openWishlistModal() {
+            renderWishlistItems();
+            openModal("wishlistModal");
+        }
+
+        function renderWishlistItems() {
+            const list = getWishlist();
+            const container = document.getElementById("wishlistItemsList");
+            const allProps = getAllProperties();
+
+            const favProps = allProps.filter(p => list.includes(p.id));
+
+            if (favProps.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 35px 15px; color: var(--text-muted);">
+                        <div style="font-size: 38px; margin-bottom: 8px;">♡</div>
+                        <p style="font-size: 15px;">هیچ موڵکێک لە لیستی دڵخوازەکانتدا نییە.</p>
+                        <button class="gold-btn" style="margin-top: 15px;" onclick="closeModal('wishlistModal')">
+                            گەڕان بەدوای موڵکەکان
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = favProps.map(prop => `
+                <div class="wishlist-item">
+                    <img src="${prop.image}" alt="${prop.title}" class="wishlist-thumb">
+                    <div class="wishlist-info">
+                        <h4>${prop.title}</h4>
+                        <p>$${Number(prop.price).toLocaleString()} ${prop.purpose === 'rent' ? '/ مانگانە' : ''}</p>
+                        <small style="color: #64748b;">📍 ${prop.locationName}</small>
+                    </div>
+                    <div class="wishlist-actions">
+                        <button class="gold-btn" style="padding: 7px 12px; font-size: 12px;" onclick="closeModal('wishlistModal'); openPropertyDetail('${prop.id}')">
+                            بینین
+                        </button>
+                        <button class="wishlist-remove-btn" onclick="toggleWishlist('${prop.id}')" title="سڕینەوە">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        // ==========================================
+        // پەنجەرەی وردەکاری موڵک (Property Details Gallery Modal)
+        // ==========================================
+        let currentDetailProp = null;
+        let activeGalleryPhotoIdx = 0;
+
+        function openPropertyDetail(propId) {
+            const allProps = getAllProperties();
+            const prop = allProps.find(p => p.id === propId);
+            if (!prop) return;
+
+            currentDetailProp = prop;
+            activeGalleryPhotoIdx = 0;
+
+            const content = document.getElementById("propertyDetailContent");
+            const isRent = prop.purpose === "rent";
+            const priceFormatted = "$" + Number(prop.price).toLocaleString() + (isRent ? " / مانگانە" : "");
+            const whatsappText = encodeURIComponent(`سڵاو، دەمەوێت زانیاری زیاتر بزانم دەربارەی موڵکی (${prop.title}) بە نرخی ${priceFormatted} لە ماڵپەڕی HomeLand.`);
+
+            const photos = (prop.images && prop.images.length > 0) ? prop.images : [prop.image];
+
+            content.innerHTML = `
+                <div>
+                    <!-- گەلەری سەرەکی موڵک -->
+                    <div class="gallery-viewer-box">
+                        <img id="detailGalleryMainImg" src="${photos[0]}" alt="${prop.title}">
+                        ${photos.length > 1 ? `
+                            <button class="gallery-arrow-btn next-btn" onclick="changeGalleryPhoto(-1)" title="وێنەی پێشوو">‹</button>
+                            <button class="gallery-arrow-btn prev-btn" onclick="changeGalleryPhoto(1)" title="وێنەی دواتر">›</button>
+                            <div class="gallery-counter-pill" id="detailGalleryCounter">وێنەی ١ لە ${photos.length}</div>
+                        ` : ''}
+                    </div>
+
+                    <!-- وێنە بچووکەکانی گەلەری (Thumbnails) -->
+                    ${photos.length > 1 ? `
+                        <div class="gallery-thumbnails-strip" id="detailThumbnailsStrip">
+                            ${photos.map((img, i) => `
+                                <div class="gallery-thumb-item ${i === 0 ? 'active' : ''}" onclick="setGalleryPhoto(${i})">
+                                    <img src="${img}" alt="وێنەی ${i + 1}">
+                                </div>
+                            `).join("")}
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div class="prop-modal-details">
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <span class="tag ${isRent ? 'rent' : 'sale'}">${isRent ? 'بۆ کرێ' : 'بۆ فرۆشتن'}</span>
+                        <span class="tag type">${prop.city.toUpperCase()}</span>
+                    </div>
+
+                    <h2 style="font-size: 22px; color: var(--navy); margin-bottom: 6px;">${prop.title}</h2>
+                    <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 12px;">📍 ${prop.locationName}</p>
+
+                    <div style="font-size: 26px; font-weight: 800; color: var(--gold); margin-bottom: 15px;">
+                        ${priceFormatted}
+                    </div>
+
+                    <div class="prop-modal-specs">
+                        <div class="spec-item">
+                            <small>ڕووبەری تەواو</small>
+                            <strong>${prop.area} م²</strong>
+                        </div>
+                        <div class="spec-item">
+                            <small>ژمارەی ژوور</small>
+                            <strong>${prop.rooms} ژوور</strong>
+                        </div>
+                        <div class="spec-item">
+                            <small>حەمام</small>
+                            <strong>${prop.baths} حەمام</strong>
+                        </div>
+                    </div>
+
+                    <p style="color: #475569; font-size: 14px; line-height: 1.8; margin-bottom: 15px;">
+                        ${prop.description || "هیچ وەسفێکی زیادە نەنووسراوە."}
+                    </p>
+
+                    <div class="feature-tags">
+                        ${(prop.features || ["تاپۆی فەرمی", "کارەبای بەردەوام", "ئاو"]).map(f => `<span class="feature-pill">✓ ${f}</span>`).join("")}
+                    </div>
+
+                    <div class="prop-modal-btns">
+                        <a class="whatsapp-btn" href="https://wa.me/9647500000000?text=${whatsappText}" target="_blank">
+                            💬 نامە لە واتسئاپ
+                        </a>
+                        <a class="phone-call-btn" href="tel:${prop.phone}">
+                            📞 پەیوەندی بە خاوەن موڵک
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            openModal("propertyDetailModal");
+        }
+
+        function changeGalleryPhoto(direction) {
+            if (!currentDetailProp) return;
+            const photos = (currentDetailProp.images && currentDetailProp.images.length > 0) ? currentDetailProp.images : [currentDetailProp.image];
+            activeGalleryPhotoIdx = (activeGalleryPhotoIdx + direction + photos.length) % photos.length;
+            updateGalleryDisplay(photos);
+        }
+
+        function setGalleryPhoto(index) {
+            if (!currentDetailProp) return;
+            const photos = (currentDetailProp.images && currentDetailProp.images.length > 0) ? currentDetailProp.images : [currentDetailProp.image];
+            activeGalleryPhotoIdx = index;
+            updateGalleryDisplay(photos);
+        }
+
+        function updateGalleryDisplay(photos) {
+            const mainImg = document.getElementById("detailGalleryMainImg");
+            const counter = document.getElementById("detailGalleryCounter");
+            if (mainImg) {
+                mainImg.style.opacity = "0.7";
+                setTimeout(() => {
+                    mainImg.src = photos[activeGalleryPhotoIdx];
+                    mainImg.style.opacity = "1";
+                }, 100);
+            }
+            if (counter) {
+                counter.textContent = `وێنەی ${activeGalleryPhotoIdx + 1} لە ${photos.length}`;
+            }
+
+            const thumbs = document.querySelectorAll(".gallery-thumb-item");
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.toggle("active", i === activeGalleryPhotoIdx);
+            });
+        }
+
+        // ==========================================
+        // سیستەمی زیادکردنی موڵک (Add Property - بە ٤ وێنە)
+        // ==========================================
+        let selectedPropImages = [];
+
+        function openAddPropertyModal() {
+            selectedPropImages = [];
+            renderPhotoSlots();
+            openModal("addPropertyModal");
+        }
+
+        // هەڵبژاردنی وێنە لە کۆمپیوتەر یان مۆبایل و کەواندنی قەبارە (Canvas Compression)
+        function handlePropFilesSelect(event) {
+            const files = Array.from(event.target.files || []);
+            if (files.length === 0) return;
+
+            const remaining = 4 - selectedPropImages.length;
+            if (remaining <= 0) {
+                showToast("تەنها دەتوانیت تا ٤ وێنە هەڵبژێریت!", "error");
+                return;
+            }
+
+            const filesToProcess = files.slice(0, remaining);
+            let processedCount = 0;
+
+            filesToProcess.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function () {
+                        // بچووککردنەوەی قەبارە بۆ بارکردنی خێرا لە localStorage
+                        const maxDim = 1200;
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxDim || h > maxDim) {
+                            if (w > h) {
+                                h = Math.round((h * maxDim) / w);
+                                w = maxDim;
+                            } else {
+                                w = Math.round((w * maxDim) / h);
+                                h = maxDim;
+                            }
+                        }
+
+                        const canvas = document.createElement("canvas");
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, w, h);
+
+                        const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.82);
+                        if (selectedPropImages.length < 4) {
+                            selectedPropImages.push(compressedDataUrl);
+                        }
+
+                        processedCount++;
+                        if (processedCount === filesToProcess.length) {
+                            renderPhotoSlots();
+                            showToast(`${processedCount} وێنە بە سەرکەوتوویی زیادکرا ✓`, "success");
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            event.target.value = "";
+        }
+
+        // ڕێندەرکردنی ٤ خانەی پێشبینینی وێنە
+        function renderPhotoSlots() {
+            const grid = document.getElementById("photoSlotsGrid");
+            const countBadge = document.getElementById("photoCountBadge");
+            if (!grid) return;
+
+            grid.innerHTML = "";
+
+            for (let i = 0; i < 4; i++) {
+                const slot = document.createElement("div");
+                const hasImg = i < selectedPropImages.length;
+
+                if (hasImg) {
+                    slot.className = `photo-slot filled ${i === 0 ? 'primary-slot' : ''}`;
+                    slot.innerHTML = `
+                        <img src="${selectedPropImages[i]}" alt="وێنەی ${i + 1}">
+                        <span class="photo-slot-badge">${i === 0 ? '★ سەرەکی' : `وێنەی ${i + 1}`}</span>
+                        <button type="button" class="photo-slot-del" onclick="removePropImage(${i})" title="سڕینەوە">✕</button>
+                    `;
+                } else {
+                    slot.className = "photo-slot";
+                    slot.innerHTML = `
+                        <div class="photo-slot-num">+</div>
+                        <div class="photo-slot-label">وێنەی ${i + 1}</div>
+                    `;
+                    slot.onclick = function () {
+                        document.getElementById("propFileInput").click();
+                    };
+                }
+
+                grid.appendChild(slot);
+            }
+
+            if (countBadge) {
+                countBadge.textContent = `(${selectedPropImages.length} لە ٤ وێنە دانراوە)`;
+            }
+        }
+
+        function removePropImage(index) {
+            selectedPropImages.splice(index, 1);
+            renderPhotoSlots();
+            showToast("وێنەکە سڕایەوە", "info");
+        }
+
+        // ٤ وێنەی ئامادەکراو بۆ تاقیکردنەوەی خێرا
+        function setPreset4Images(type) {
+            const presets = {
+                house: [
+                    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80"
+                ],
+                apartment: [
+                    "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
+                ],
+                villa: [
+                    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+                ],
+                land: [
+                    "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1524813686514-a57563d77d66?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80"
+                ]
+            };
+
+            selectedPropImages = [...(presets[type] || presets.house)];
+            renderPhotoSlots();
+            showToast("٤ وێنەی نموونەیی بە سەرکەوتوویی هەڵبژێردرا! 📸", "success");
+        }
+
+        function handleAddNewProperty(event) {
+            event.preventDefault();
+
+            if (selectedPropImages.length === 0) {
+                showToast("تکایە لانیکەم ١ وێنە لە ئامێرەکەتەوە هەڵبژێرە (تا ٤ وێنە)! 📷", "error");
+                return;
+            }
+
+            const title = document.getElementById("addPropTitle").value.trim();
+            const type = document.getElementById("addPropType").value;
+            const purpose = document.getElementById("addPropPurpose").value;
+            const city = document.getElementById("addPropCity").value;
+            const price = Number(document.getElementById("addPropPrice").value);
+            const area = Number(document.getElementById("addPropArea").value);
+            const rooms = Number(document.getElementById("addPropRooms").value) || 0;
+            const baths = Number(document.getElementById("addPropBaths").value) || 0;
+            const phone = document.getElementById("addPropPhone").value.trim();
+            const desc = document.getElementById("addPropDesc").value.trim();
+
+            const cityNames = {
+                erbil: "هەولێر",
+                sulaymaniyah: "سلێمانی",
+                duhok: "دهۆک",
+                ankawa: "عەنکاوە",
+                "100m": "شەقامی ١٠٠ مەتر"
+            };
+
+            const currentUser = getCurrentUser();
+
+            const newProp = {
+                id: "custom-" + Date.now(),
+                title: title,
+                type: type,
+                purpose: purpose,
+                city: city,
+                locationName: `${cityNames[city] || city} - تۆمارکراوی نوێ`,
+                price: price,
+                area: area,
+                rooms: rooms,
+                baths: baths,
+                phone: phone,
+                image: selectedPropImages[0], // وێنەی سەرەکی
+                images: [...selectedPropImages], // هەموو ٤ وێنەکە
+                description: desc,
+                features: ["تۆمارکراوی نوێ", "تاپۆی یاسایی", "ئامادەی فرۆشتن"],
+                authorEmail: currentUser ? currentUser.email : null,
+                authorName: currentUser ? currentUser.name : null,
+                authorPhone: currentUser ? currentUser.phone : null,
+                createdAt: new Date().toISOString()
+            };
+
+            const stored = localStorage.getItem("homeland_custom_properties");
+            const customProps = stored ? JSON.parse(stored) : [];
+            customProps.unshift(newProp);
+            localStorage.setItem("homeland_custom_properties", JSON.stringify(customProps));
+
+            closeModal("addPropertyModal");
+            renderProperties(getAllProperties());
+            showToast("موڵکەکەت بە سەرکەوتوویی و بە ٤ وێنە بڵاوکرایەوە! 🎉", "success");
+
+            updateStatsBar();
+            event.target.reset();
+            selectedPropImages = [];
+            renderPhotoSlots();
+        }
+
+        function updateStatsBar() {
+            const count = getAllProperties().length;
+            const el = document.getElementById("statTotalProps");
+            if (el) el.textContent = `${count}+`;
+        }
+
+        // ==========================================
+        // سیستەمی هەژمار و داشبۆردی بەکارهێنەر (Auth & Dashboard)
+        // ==========================================
+        function getCurrentUser() {
+            const user = localStorage.getItem("homeland_current_user");
+            return user ? JSON.parse(user) : null;
+        }
+
+        function setCurrentUser(user) {
+            if (user) {
+                localStorage.setItem("homeland_current_user", JSON.stringify(user));
+            } else {
+                localStorage.removeItem("homeland_current_user");
+            }
+            updateAuthUI();
+        }
+
+        function getRoleTitle(role) {
+            if (role === "owner") return "🏢 خاوەن موڵک";
+            if (role === "agency") return "🏛 نووسینگەی خانووبەرە";
+            return "👤 کڕیار / کرێچی";
+        }
+
+        function updateAuthUI() {
+            const currentUser = getCurrentUser();
+            const authTopSlot = document.getElementById("authTopSlot");
+            const headerBtnsSlot = document.getElementById("headerAuthButtonsSlot");
+
+            if (currentUser) {
+                const firstLetter = currentUser.name.charAt(0).toUpperCase();
+                const roleTitle = getRoleTitle(currentUser.role);
+
+                if (authTopSlot) {
+                    authTopSlot.innerHTML = `
+                        <button class="top-bar-btn highlight" onclick="openAuthModal()">
+                            👤 بەخێربێیت، ${currentUser.name.split(" ")[0]}
+                        </button>
+                        <span class="top-sep">|</span>
+                        <button class="top-bar-btn" onclick="handleLogout()" style="color: #f87171;">
+                            دەرچوون
+                        </button>
+                    `;
+                }
+
+                if (headerBtnsSlot) {
+                    headerBtnsSlot.innerHTML = `
+                        <div class="header-user-chip" onclick="openAuthModal()" title="کردنەوەی داشبۆرد">
+                            <div class="header-user-avatar">${firstLetter}</div>
+                            <span style="font-weight: 700; font-size: 13.5px;">${currentUser.name.split(" ")[0]}</span>
+                            <small style="color: var(--gold); font-size: 11px;">(${roleTitle.split(" ")[1] || 'ئەندام'})</small>
+                        </div>
+                    `;
+                }
+            } else {
+                if (authTopSlot) {
+                    authTopSlot.innerHTML = `
+                        <button class="top-bar-btn highlight" onclick="openAuthModal('register')">
+                            ✨ دروستکردنی هەژمار
+                        </button>
+                        <span class="top-sep">|</span>
+                        <button class="top-bar-btn" onclick="openAuthModal('login')">
+                            🔑 چوونەژوورەوە
+                        </button>
+                    `;
+                }
+
+                if (headerBtnsSlot) {
+                    headerBtnsSlot.innerHTML = `
+                        <button class="header-register-btn" onclick="openAuthModal('register')">
+                            ✨ دروستکردنی ئەکاونت
+                        </button>
+                        <button class="header-login-btn" onclick="openAuthModal('login')">
+                            🔑 چوونەژوورەوە
+                        </button>
+                    `;
+                }
+            }
+        }
+
+        function openAuthModal(defaultTab = 'register') {
+            const currentUser = getCurrentUser();
+            const authForms = document.getElementById("authFormsContainer");
+            const profileView = document.getElementById("userProfileContainer");
+
+            if (currentUser) {
+                authForms.style.display = "none";
+                profileView.style.display = "block";
+
+                document.getElementById("profName").textContent = currentUser.name;
+                document.getElementById("profEmail").textContent = currentUser.email;
+                document.getElementById("profPhone").textContent = currentUser.phone || "+964 750 000 0000";
+                document.getElementById("profAvatar").textContent = currentUser.name.charAt(0).toUpperCase();
+                document.getElementById("profRoleBadge").textContent = getRoleTitle(currentUser.role);
+
+                switchDashTab("overview");
+                renderUserProperties();
+                updateWishlistBadge();
+            } else {
+                authForms.style.display = "block";
+                profileView.style.display = "none";
+                toggleForgotPwd(false);
+                switchAuthTab(defaultTab);
+            }
+
+            openModal("accountModal");
+        }
+
+        function switchAuthTab(tab) {
+            const isReg = tab === 'register';
+            document.getElementById("registerForm").style.display = isReg ? "block" : "none";
+            document.getElementById("loginForm").style.display = isReg ? "none" : "block";
+
+            document.getElementById("authTabRegister").classList.toggle("active", isReg);
+            document.getElementById("authTabLogin").classList.toggle("active", !isReg);
+            toggleForgotPwd(false);
+        }
+
+        function selectRole(role) {
+            document.getElementById("regRole").value = role;
+            document.querySelectorAll(".role-card").forEach(card => card.classList.remove("active"));
+            if (role === "buyer") document.getElementById("roleBuyer").classList.add("active");
+            else if (role === "owner") document.getElementById("roleOwner").classList.add("active");
+            else if (role === "agency") document.getElementById("roleAgency").classList.add("active");
+        }
+
+        function togglePasswordVisibility(fieldId, btn) {
+            const input = document.getElementById(fieldId);
+            if (!input) return;
+            const isPass = input.type === "password";
+            input.type = isPass ? "text" : "password";
+            btn.textContent = isPass ? "🙈" : "👁️";
+        }
+
+        function handlePwdStrengthCheck(val) {
+            const fill = document.getElementById("pwdStrengthFill");
+            const label = document.getElementById("pwdStrengthLabel");
+            if (!fill || !label) return;
+
+            let score = 0;
+            if (val.length >= 6) score++;
+            if (val.length >= 8 && /[0-9]/.test(val)) score++;
+            if (/[A-Z]/.test(val) || /[^A-Za-z0-9]/.test(val)) score++;
+
+            if (val.length === 0) {
+                fill.style.width = "0%";
+                fill.style.background = "#e2e8f0";
+                label.textContent = "هێزی وشەی نهێنی: دیاری نەکراوە";
+                label.style.color = "var(--text-muted)";
+            } else if (score <= 1) {
+                fill.style.width = "33%";
+                fill.style.background = "#ef4444";
+                label.textContent = "هێزی وشەی نهێنی: لاواز";
+                label.style.color = "#ef4444";
+            } else if (score === 2) {
+                fill.style.width = "66%";
+                fill.style.background = "#f59e0b";
+                label.textContent = "هێزی وشەی نهێنی: مامناوەند";
+                label.style.color = "#f59e0b";
+            } else {
+                fill.style.width = "100%";
+                fill.style.background = "#10b981";
+                label.textContent = "هێزی وشەی نهێنی: زۆر بەهێز ✓";
+                label.style.color = "#10b981";
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById("regName").value.trim();
+            const email = document.getElementById("regEmail").value.trim().toLowerCase();
+            const phone = document.getElementById("regPhone").value.trim();
+            const city = document.getElementById("regCity").value;
+            const role = document.getElementById("regRole").value;
+            const password = document.getElementById("regPassword").value;
+            const confirmPassword = document.getElementById("regConfirmPassword").value;
+
+            if (password !== confirmPassword) {
+                showToast("وشەی نهێنی و دووبارەکردنەوەکەی یەک ناگرنەوە!", "error");
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem("homeland_users") || "[]");
+
+            if (users.some(u => u.email === email)) {
+                showToast("ئەم ئیمەیڵە پێشتر تۆمارکراوە! تکایە بچۆ ژوورەوە.", "error");
+                switchAuthTab('login');
+                return;
+            }
+
+            const newUser = {
+                name,
+                email,
+                phone,
+                city,
+                role,
+                password,
+                createdAt: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            localStorage.setItem("homeland_users", JSON.stringify(users));
+
+            setCurrentUser(newUser);
+            closeModal("accountModal");
+            showToast(`بەخێربێیت ${name}! هەژمارەکەت بە سەرکەوتوویی دروستکرا. 🎉`, "success");
+            event.target.reset();
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const query = document.getElementById("loginEmail").value.trim().toLowerCase();
+            const password = document.getElementById("loginPassword").value;
+
+            const users = JSON.parse(localStorage.getItem("homeland_users") || "[]");
+            const found = users.find(u => (u.email === query || (u.phone && u.phone.includes(query))) && u.password === password);
+
+            if (found) {
+                setCurrentUser(found);
+                closeModal("accountModal");
+                showToast(`بەخێربێیتەوە ${found.name}! 🌟`, "success");
+                event.target.reset();
+            } else {
+                showToast("ئیمەیڵ یان وشەی نهێنی هەڵەیە!", "error");
+            }
+        }
+
+        function quickDemoLogin() {
+            const demoUser = {
+                name: "کاروان ڕەسوڵ",
+                email: "karwan@homeland.com",
+                phone: "+964 750 123 4567",
+                role: "owner",
+                city: "erbil",
+                createdAt: new Date().toISOString()
+            };
+
+            const users = JSON.parse(localStorage.getItem("homeland_users") || "[]");
+            if (!users.some(u => u.email === demoUser.email)) {
+                users.push(demoUser);
+                localStorage.setItem("homeland_users", JSON.stringify(users));
+            }
+
+            setCurrentUser(demoUser);
+            closeModal("accountModal");
+            showToast("بەخێربێیت! وەک بەکارهێنەری نموونەیی (کاروان) چوویتە ژوورەوە 🚀", "success");
+        }
+
+        function toggleForgotPwd(show) {
+            const forgotBox = document.getElementById("forgotPwdBox");
+            const loginForm = document.getElementById("loginForm");
+            if (forgotBox && loginForm) {
+                forgotBox.style.display = show ? "block" : "none";
+                loginForm.style.display = show ? "none" : "block";
+            }
+        }
+
+        function handleResetPassword() {
+            const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
+            const newPass = document.getElementById("forgotNewPassword").value;
+
+            if (!email || newPass.length < 6) {
+                showToast("تکایە ئیمەیڵ و وشەی نهێنی نوێ (لانیکەم ٦ پیت) بنووسە.", "error");
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem("homeland_users") || "[]");
+            const user = users.find(u => u.email === email);
+
+            if (user) {
+                user.password = newPass;
+                localStorage.setItem("homeland_users", JSON.stringify(users));
+                showToast("وشەی نهێنی بە سەرکەوتوویی نوێکرایەوە! ئێستا بچۆ ژوورەوە.", "success");
+                toggleForgotPwd(false);
+            } else {
+                showToast("ئەم ئیمەیڵە لە سیستەم نەدۆزرایەوە.", "error");
+            }
+        }
+
+        // ==========================================
+        // داشبۆردی بەکارهێنەر (User Dashboard Functions)
+        // ==========================================
+        function switchDashTab(tab) {
+            document.querySelectorAll(".dash-nav-tab").forEach(t => t.classList.remove("active"));
+            document.getElementById("dashTabOverview").style.display = tab === "overview" ? "block" : "none";
+            document.getElementById("dashTabProperties").style.display = tab === "properties" ? "block" : "none";
+            document.getElementById("dashTabEdit").style.display = tab === "edit" ? "block" : "none";
+
+            const tabs = document.querySelectorAll(".dash-nav-tab");
+            if (tab === "overview") tabs[0].classList.add("active");
+            else if (tab === "properties") {
+                tabs[1].classList.add("active");
+                renderUserProperties();
+            } else if (tab === "edit") {
+                tabs[2].classList.add("active");
+                const u = getCurrentUser();
+                if (u) {
+                    document.getElementById("editProfName").value = u.name;
+                    document.getElementById("editProfPhone").value = u.phone || "";
+                    document.getElementById("editProfRole").value = u.role || "buyer";
+                }
+            }
+        }
+
+        function renderUserProperties() {
+            const container = document.getElementById("dashUserPropsList");
+            const currentUser = getCurrentUser();
+            if (!container) return;
+
+            const stored = localStorage.getItem("homeland_custom_properties");
+            const customProps = stored ? JSON.parse(stored) : [];
+
+            // ئەگەر بەکارهێنەر هەبوو، موڵکەکانی ئەو پیشان بدە یان هەموو موڵکە دەستکاری کراوەکان
+            const userProps = currentUser
+                ? customProps.filter(p => !p.authorEmail || p.authorEmail === currentUser.email)
+                : customProps;
+
+            const countEl = document.getElementById("profPropertiesCount");
+            const badgeEl = document.getElementById("profMyPropsCountBadge");
+            if (countEl) countEl.textContent = userProps.length;
+            if (badgeEl) badgeEl.textContent = userProps.length;
+
+            if (userProps.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 25px 10px; color: var(--text-muted);">
+                        <div style="font-size: 32px; margin-bottom: 6px;">🏡</div>
+                        <p style="font-size: 13.5px;">تۆ تا ئێستا هیچ موڵکێکت دانەناوە.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = userProps.map(p => `
+                <div class="dash-prop-card">
+                    <img src="${p.image}" alt="${p.title}" class="dash-prop-img">
+                    <div class="dash-prop-details">
+                        <h4>${p.title}</h4>
+                        <p>$${Number(p.price).toLocaleString()} • ${p.city.toUpperCase()}</p>
+                    </div>
+                    <button class="dash-prop-del-btn" onclick="deleteUserProp('${p.id}')" title="سڕینەوەی ئەم موڵکە">
+                        🗑️
+                    </button>
+                </div>
+            `).join("");
+        }
+
+        function deleteUserProp(propId) {
+            if (!confirm("ئایا دڵنیایت دەتەوێت ئەم موڵکە بسڕیتەوە؟")) return;
+
+            const stored = localStorage.getItem("homeland_custom_properties");
+            let customProps = stored ? JSON.parse(stored) : [];
+            customProps = customProps.filter(p => p.id !== propId);
+            localStorage.setItem("homeland_custom_properties", JSON.stringify(customProps));
+
+            renderUserProperties();
+            renderProperties(getAllProperties());
+            updateStatsBar();
+            showToast("موڵکەکە بە سەرکەوتوویی سڕایەوە.", "info");
+        }
+
+        function handleSaveProfileEdit() {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            const newName = document.getElementById("editProfName").value.trim();
+            const newPhone = document.getElementById("editProfPhone").value.trim();
+            const newRole = document.getElementById("editProfRole").value;
+
+            if (!newName) {
+                showToast("تکایە ناو بنووسە", "error");
+                return;
+            }
+
+            currentUser.name = newName;
+            currentUser.phone = newPhone;
+            currentUser.role = newRole;
+
+            setCurrentUser(currentUser);
+
+            // Update in homeland_users list as well
+            const users = JSON.parse(localStorage.getItem("homeland_users") || "[]");
+            const idx = users.findIndex(u => u.email === currentUser.email);
+            if (idx > -1) {
+                users[idx] = { ...users[idx], ...currentUser };
+                localStorage.setItem("homeland_users", JSON.stringify(users));
+            }
+
+            showToast("زانیارییەکان بە سەرکەوتوویی نوێکرانەوە ✓", "success");
+            openAuthModal();
+        }
+
+        function handleLogout() {
+            setCurrentUser(null);
+            closeModal("accountModal");
+            showToast("بە سەرکەوتوویی لە هەژمارەکەت چوویتە دەرەوە. 👋", "info");
+        }
+
+        // ==========================================
+        // حاسیبەی قیستی خانووبەرە (Mortgage Logic)
+        // ==========================================
+        function calculateMortgage() {
+            const price = Number(document.getElementById("calcPriceInput").value) || 0;
+            const downPercent = Number(document.getElementById("calcDownRange").value);
+            const years = Number(document.getElementById("calcYearsRange").value);
+            const ratePercent = Number(document.getElementById("calcRateRange").value);
+
+            const downAmount = (price * downPercent) / 100;
+            const loanAmount = Math.max(0, price - downAmount);
+            const totalMonths = years * 12;
+
+            document.getElementById("calcPriceDisplay").textContent = "$" + price.toLocaleString();
+            document.getElementById("calcDownDisplay").textContent = `${downPercent}% ($${downAmount.toLocaleString()})`;
+            document.getElementById("calcYearsDisplay").textContent = `${years} ساڵ (${totalMonths} مانگ)`;
+            document.getElementById("calcRateDisplay").textContent = `${ratePercent}%`;
+
+            let monthlyPayment = 0;
+            let totalPayment = 0;
+            let totalInterest = 0;
+
+            if (ratePercent === 0) {
+                monthlyPayment = loanAmount / totalMonths;
+                totalPayment = loanAmount;
+            } else {
+                const monthlyRate = (ratePercent / 100) / 12;
+                monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+                totalPayment = monthlyPayment * totalMonths;
+                totalInterest = totalPayment - loanAmount;
+            }
+
+            document.getElementById("monthlyPaymentResult").textContent = "$" + Math.round(monthlyPayment).toLocaleString();
+            document.getElementById("loanAmountResult").textContent = "$" + Math.round(loanAmount).toLocaleString();
+            document.getElementById("downPaymentResult").textContent = "$" + Math.round(downAmount).toLocaleString();
+            document.getElementById("totalInterestResult").textContent = "$" + Math.round(totalInterest).toLocaleString();
+            document.getElementById("totalPaymentResult").textContent = "$" + Math.round(totalPayment + downAmount).toLocaleString();
+        }
+
+        // ==========================================
+        // پرسیارە باوەکان (FAQ Accordion)
+        // ==========================================
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains("active");
+
+            document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("active"));
+
+            if (!isActive) {
+                item.classList.add("active");
+            }
+        }
+
+        // ==========================================
+        // فۆڕمی پەیوەندی خێرا (Inquiry Submit)
+        // ==========================================
+        function handleInquirySubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById("inqName").value;
+            const phone = document.getElementById("inqPhone").value;
+
+            showToast(`سوپاس ${name}! پەیامەکەت بە سەرکەوتوویی گەیشت، بەم زووانە لەڕێگەی ${phone} پەیوەندیت پێوە دەکەین.`, "success");
+            event.target.reset();
+        }
+
+        // ==========================================
+        // مۆداڵ و تۆست یارمەتیدەرەکان (Modal & Toast Helpers)
+        // ==========================================
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.style.display = "flex";
+                document.body.style.overflow = "hidden";
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+
+        window.addEventListener("click", function (event) {
+            if (event.target.classList.contains("modal")) {
+                event.target.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        function showToast(message, type = "info") {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+
+            let icon = "ℹ️";
+            if (type === "success") icon = "✓";
+            else if (type === "error") icon = "✕";
+
+            toast.innerHTML = `<span>${icon}</span> <div>${message}</div>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = "slideInRight .3s ease reverse";
+                setTimeout(() => toast.remove(), 280);
+            }, 3500);
+        }
+
+        // دەستپێکردنی بەرنامە (App Initialization)
+        document.addEventListener("DOMContentLoaded", function () {
+            renderProperties(getAllProperties());
+            updateWishlistBadge();
+            updateAuthUI();
+            calculateMortgage();
+            updateStatsBar();
+            renderPhotoSlots();
+
+            // پاڵپشتی کێشان و بەردان (Drag & Drop) بۆ وێنەکان
+            const dropzone = document.getElementById("photoDropzone");
+            if (dropzone) {
+                dropzone.addEventListener("dragover", function (e) {
+                    e.preventDefault();
+                    dropzone.classList.add("dragover");
+                });
+                dropzone.addEventListener("dragleave", function () {
+                    dropzone.classList.remove("dragover");
+                });
+                dropzone.addEventListener("drop", function (e) {
+                    e.preventDefault();
+                    dropzone.classList.remove("dragover");
+                    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                        handlePropFilesSelect({ target: { files: e.dataTransfer.files, value: "" } });
+                    }
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>
